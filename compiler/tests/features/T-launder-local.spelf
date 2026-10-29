@@ -1,0 +1,11 @@
+module Feature.LaunderLocal
+extern fn read_contact() -> Suspect<bool>;
+state touchdown: bool = false;
+fn update() {
+  var seen: bool = false;
+  match read_contact() {
+    Valid(c) => { if c { seen = true; } }
+    _ => {}
+  }
+  touchdown = seen;
+}

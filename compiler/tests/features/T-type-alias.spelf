@@ -1,0 +1,10 @@
+module Feature.TypeAlias
+type Axis = Int<0..=2>;
+type Rate = Float<rad/s, -35.0..=35.0>;
+type Rates = [Rate; 3];
+fn pick(r: Rates, k: Axis) -> Rate { r[k] }
+fn main() {
+  let r: Rates = [1.5[rad/s]; 3];
+  let k: Axis = 2;
+  print(k + 1);
+}

@@ -1,0 +1,39 @@
+module Test.Smoke @assurance(L1)
+
+sealed enum Phase { Ground, Ascent, Cruise }
+
+const LIMIT: Int<0..=100> = 50;
+
+fn clamp_add(a: Int<0..=100>, b: Int<0..=100>) -> Int<0..=100>
+  effects { no_alloc, wcet <= 1[us] }
+{
+  let s = a + b;
+  if s > 100 {
+    return 100;
+  }
+  s
+}
+
+fn classify(p: Phase) -> Int<0..=2> {
+  match p {
+    Phase::Ground => 0,
+    Phase::Ascent => 1,
+    Phase::Cruise => 2,
+  }
+}
+
+fn main() -> Int<0..=255> {
+  let x = clamp_add(70, 60);
+  print(x);
+  var arr: [Int<0..=9>; 4] = [9; 4];
+  arr[3] = 0;
+  var total: Int<0..=36> = 0;
+  for i in 0..4 {
+    if total <= 27 {
+      total = total + arr[i];
+    }
+  }
+  print(27);
+  print(classify(Phase::Ascent));
+  0
+}

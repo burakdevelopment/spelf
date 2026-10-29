@@ -1,0 +1,5 @@
+module Mutant.M21
+fn depth(n: Int<0..=100>) -> Int<0..=100> {
+  if n == 0 { return 0; }
+  depth(n - 1)
+}

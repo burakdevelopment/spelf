@@ -1,0 +1,39 @@
+module Mars.Lander @assurance(L2)
+type Alt = Float32<m, 0.0..=2500.0>;
+type Vz = Float32<m/s, -80.0..=10.0>;
+type Throttle = Float32<1, 0.0..=1.0>;
+const ARM_ALT: Float32<m> = 40.0[m];
+const HOVER: Float32<1> = 0.38;
+const KV: Float32<s/m> = 0.08[s/m];
+const KH: Float32<1/s> = 0.1[1/s];
+state armed: Latch = latch(persists_for = 5);
+state touchdown: Latch = latch(persists_for = 3);
+
+fn leg(r: Suspect<bool>) -> Int<0..=1> {
+  match r {
+    Valid(c) => if c { 1 } else { 0 },
+    _ => 0,
+  }
+}
+
+fn lander_step(alt: Suspect<Alt>, vz: Vz, l1: Suspect<bool>, l2: Suspect<bool>, l3: Suspect<bool>) -> Throttle {
+  match alt {
+    Valid(h) => feed(armed, h < ARM_ALT),
+    _ => feed(armed, false),
+  }
+  let vref = match alt {
+    Valid(h) => {
+      let v = 0.0[m/s] - KH * h - 1.0[m/s];
+      if v < -20.0[m/s] { -20.0[m/s] } else { v }
+    }
+    _ => -2.0[m/s],
+  };
+  let n = leg(l1) + leg(l2) + leg(l3);
+  feed(touchdown, is_set(armed) && n >= 2);
+  if is_set(touchdown) {
+    0.0
+  } else {
+    let t = HOVER + KV * (vref - vz);
+    if t < 0.1 { 0.1 } else { if t > 1.0 { 1.0 } else { t } }
+  }
+}

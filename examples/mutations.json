@@ -1,0 +1,92 @@
+[
+ {
+  "file": "01-units/impulse.spelf",
+  "change": "nav + convert<N*s>(ground)",
+  "to": "nav + ground",
+  "rejected_by": "05§5.2"
+ },
+ {
+  "file": "02-narrowing/bias.spelf",
+  "change": "-30000.0..=30000.0",
+  "to": "-65000.0..=65000.0",
+  "rejected_by": "R-501"
+ },
+ {
+  "file": "03-frames/mounting.spelf",
+  "change": "rotate<BodyV>(MAG_TO_BODY, m)",
+  "to": "BodyV { x: m.x, y: m.y, z: m.z }",
+  "rejected_by": "05§5.2"
+ },
+ {
+  "file": "03-frames/mounting.spelf",
+  "change": "[1.0, 0.0, 0.0], [0.0, 0.0, 1.0]]",
+  "to": "[1.0, 0.0, 0.0], [0.0, 0.0, -1.0]]",
+  "rejected_by": "05§5.2"
+ },
+ {
+  "file": "04-sensors/touchdown.spelf",
+  "change": "state touchdown: Latch = latch(persists_for = 3);",
+  "to": "state touchdown: Latch = latch(persists_for = 3);\nstate landed: bool = false;\nfn mpl(l1: Suspect<bool>) {\n  if contact(l1) == 1 { landed = true; }\n}",
+  "rejected_by": "R-404"
+ },
+ {
+  "file": "04-sensors/touchdown.spelf",
+  "change": "    Valid(h) => feed(armed, h < 40.0[m]),\n    _ => feed(armed, false),\n",
+  "to": "    _ => feed(armed, alt < 40.0[m]),\n",
+  "rejected_by": "R-402"
+ },
+ {
+  "file": "05-saturation/pi.spelf",
+  "change": "fn main() -> Int<0..=255> {",
+  "to": "fn blind(raw: Float<N*m>) -> Float<N*m> { saturate(raw, -0.5[N*m], 0.5[N*m]) }\nfn main() -> Int<0..=255> {",
+  "rejected_by": "R-407"
+ },
+ {
+  "file": "05-saturation/pi.spelf",
+  "change": "    Clamped(u) => u,",
+  "to": "    Clamped(u) => {\n      integ = integ + e * DT;\n      u\n    }",
+  "rejected_by": "R-501"
+ },
+ {
+  "file": "06-tasks/scheduling.spelf",
+  "change": "wcet = 3[ms]",
+  "to": "wcet = 9[ms]",
+  "rejected_by": "R-304"
+ },
+ {
+  "file": "06-tasks/scheduling.spelf",
+  "change": "task Tlm(period = 100[ms], priority = 10, wcet = 20[ms]) { let r = Estimate.get(); }",
+  "to": "state raw: Int<-1000..=1000> = 0;\ntask Tlm(period = 100[ms], priority = 10, wcet = 20[ms]) { raw = 3; }\ntask Log(period = 50[ms], priority = 20, wcet = 1[ms]) { let x = raw; }",
+  "rejected_by": "03§3.3"
+ },
+ {
+  "file": "07-px4-rate-control/rate_control.spelf",
+  "change": "  let x = err / 6.981317007977318[rad/s];",
+  "to": "  let x = err / 6.981317007977318;",
+  "rejected_by": "05§5.2"
+ },
+ {
+  "file": "07-px4-rate-control/rate_control_f32.spelf",
+  "change": "  let x = err / 6.981317007977318[rad/s];",
+  "to": "  let x = err / 6.981317007977318;",
+  "rejected_by": "05§5.2"
+ },
+ {
+  "file": "08-ccsds-header/primary_header.spelf",
+  "change": "  decode(raw)\n}",
+  "to": "  raw\n}",
+  "rejected_by": "R-202"
+ },
+ {
+  "file": "08-ccsds-header/primary_header.spelf",
+  "change": "  decode(w) = w + 1,",
+  "to": "  decode(w) = w,",
+  "rejected_by": "R-202"
+ },
+ {
+  "file": "08-ccsds-header/primary_header.spelf",
+  "change": "  p[5] = 5;",
+  "to": "  p[16] = 5;",
+  "rejected_by": "02§2.5"
+ }
+]

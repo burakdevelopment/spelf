@@ -1,0 +1,16 @@
+module Feature.Latch
+state flag: Latch = latch(persists_for = 3);
+fn step(c: bool) -> bool {
+  feed(flag, c);
+  is_set(flag)
+}
+fn main() -> Int<0..=255> {
+  print(step(true));
+  print(step(true));
+  print(step(false));
+  print(step(true));
+  print(step(true));
+  print(step(true));
+  print(step(false));
+  0
+}

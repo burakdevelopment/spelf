@@ -1,0 +1,8 @@
+module Feature.WatchdogInactive
+mode_lattice Mission { Cruise -> SafeHold, SafeHold -> Cruise }
+extern fn wd_kick() effects { io(Wd) };
+watchdog Wd { timeout = 100[ms], fed_by = Health }
+task Gnc(period = 10[ms], priority = 30, wcet = 2[ms]) { }
+task Health(period = 20[ms], priority = 25, wcet = 1[ms]) { wd_kick(); }
+schedule Nominal for { Cruise } { Gnc, Health }
+schedule Safe for { SafeHold } { Gnc }

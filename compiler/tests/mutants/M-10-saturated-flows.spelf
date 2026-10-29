@@ -1,0 +1,6 @@
+module Mutant.M10
+extern fn read_rate() -> Suspect<Float<rad/s>>;
+fn estimate(gain: Float<1>) -> Float<rad/s> {
+  let w = read_rate();
+  w * gain
+}

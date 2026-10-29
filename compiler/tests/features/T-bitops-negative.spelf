@@ -1,0 +1,2 @@
+module Feature.BitopsNegative
+fn f(x: Int<-5..=5>) -> Int<0..=15> { band(x, 15) }

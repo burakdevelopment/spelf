@@ -1,0 +1,2 @@
+module Feature.T_ts_dma_wrong_region
+resource DmaBuf { Cpu, Device } device { Device } { words: [Int<0..=65535>; 8] }

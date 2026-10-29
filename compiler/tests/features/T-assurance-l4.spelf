@@ -1,0 +1,2 @@
+module Feature.L4 @assurance(L4)
+fn id(x: Int<0..=1>) -> Int<0..=1> { x }

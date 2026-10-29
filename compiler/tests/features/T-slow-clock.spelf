@@ -1,0 +1,4 @@
+module Feature.SlowClock
+clock { nominal = 50[MHz], degraded = { 10[MHz] } }
+task Gnc(period = 10[ms], priority = 30, wcet = 3[ms]) { }
+task Tlm(period = 100[ms], priority = 10, wcet = 20[ms]) { }

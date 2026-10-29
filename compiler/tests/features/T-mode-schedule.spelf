@@ -1,0 +1,15 @@
+module Feature.ModeSchedule
+mode_lattice Mission { Cruise -> Science, Science -> Cruise, any -> SafeHold, SafeHold -> Cruise }
+extern fn wd_kick() effects { io(Wd) };
+clock { nominal = 50[MHz], degraded = { 25[MHz] } }
+watchdog Wd { timeout = 100[ms], fed_by = Health }
+protected Estimate {
+  var rate: Int<-1000..=1000> = 0;
+  fn put(r: Int<-1000..=1000>) effects { wcet <= 20[us] } { rate = r; }
+  fn get() -> Int<-1000..=1000> effects { wcet <= 15[us] } { rate }
+}
+task Gnc(period = 10[ms], priority = 30, wcet = 2[ms]) { Estimate.put(5); }
+task Payload(period = 50[ms], priority = 20, wcet = 6[ms]) { let r = Estimate.get(); }
+task Health(period = 20[ms], priority = 25, wcet = 1[ms]) { wd_kick(); }
+schedule Nominal for { Cruise, Science } { Gnc, Payload, Health }
+schedule Safe for { SafeHold } { Gnc(period = 8[ms]), Health }

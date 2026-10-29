@@ -1,0 +1,583 @@
+{
+ "mutants/C-15-mode-gate.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/C-15-mode-gate.spelf": {
+  "expect": "05§5.5"
+ },
+ "mutants/M-01-narrowing.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "32767",
+   "-1200"
+  ]
+ },
+ "mutants/M-01-narrowing.spelf": {
+  "expect": "R-501"
+ },
+ "mutants/M-02-unit-swap.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "4.448222"
+  ]
+ },
+ "mutants/M-02-unit-swap.spelf": {
+  "expect": "05§5.2"
+ },
+ "mutants/M-03-frame-swap.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-03-frame-swap.spelf": {
+  "expect": "05§5.2"
+ },
+ "mutants/M-04-counter-overflow.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "6",
+   "2147483647"
+  ]
+ },
+ "mutants/M-04-counter-overflow.spelf": {
+  "expect": "R-501"
+ },
+ "mutants/M-05-epoch-mix.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-05-epoch-mix.spelf": {
+  "expect": "03§3.5"
+ },
+ "mutants/M-06-buffer-overread.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "7",
+   "0"
+  ]
+ },
+ "mutants/M-06-buffer-overread.spelf": {
+  "expect": "02§2.5"
+ },
+ "mutants/M-07-encoded-plus-one.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "6",
+   "5"
+  ]
+ },
+ "mutants/M-07-encoded-plus-one.spelf": {
+  "expect": "R-202"
+ },
+ "mutants/M-08-manual-ceiling.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-08-manual-ceiling.spelf": {
+  "expect": "R-302"
+ },
+ "mutants/M-09-data-race.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-09-data-race.spelf": {
+  "expect": "03§3.3"
+ },
+ "mutants/M-10-saturated-flows.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-10-saturated-flows.spelf": {
+  "expect": "R-402"
+ },
+ "mutants/M-11-stale-persists.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-11-stale-persists.spelf": {
+  "expect": "R-403"
+ },
+ "mutants/M-12-transient-latched.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-12-transient-latched.spelf": {
+  "expect": "R-404"
+ },
+ "mutants/M-13-unbounded-queue.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "0"
+  ]
+ },
+ "mutants/M-13-unbounded-queue.spelf": {
+  "expect": "JPL-7"
+ },
+ "mutants/M-14-identical-failover.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-14-identical-failover.spelf": {
+  "expect": "R-405"
+ },
+ "mutants/M-15-halt-in-flight.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-15-halt-in-flight.spelf": {
+  "expect": "R-401"
+ },
+ "mutants/M-16-config-out-of-range.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-16-config-out-of-range.spelf": {
+  "expect": "05§5.7"
+ },
+ "mutants/M-17-quaternion-sign.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "0.600000",
+   "-0.800000",
+   "0.800000",
+   "0.600000"
+  ]
+ },
+ "mutants/M-17-quaternion-sign.spelf": {
+  "expect": "R-505"
+ },
+ "mutants/M-18-windup.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "1.000000",
+   "1",
+   "0.300000",
+   "0"
+  ]
+ },
+ "mutants/M-18-windup.spelf": {
+  "expect": "R-407"
+ },
+ "mutants/M-19-envelope-violation.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-19-envelope-violation.spelf": {
+  "expect": "R-502"
+ },
+ "mutants/M-20-safe-path-failed-device.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-20-safe-path-failed-device.spelf": {
+  "expect": "R-410"
+ },
+ "mutants/M-21-unbounded-recursion.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "42"
+  ]
+ },
+ "mutants/M-21-unbounded-recursion.spelf": {
+  "expect": "R-201"
+ },
+ "mutants/M-22-uninitialized.fixed.spelf": {
+  "expect": "OK"
+ },
+ "mutants/M-22-uninitialized.spelf": {
+  "expect": "00§0.2-E"
+ },
+ "mutants/M-23-divide-by-zero.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "50"
+  ]
+ },
+ "mutants/M-23-divide-by-zero.spelf": {
+  "expect": "R-501"
+ },
+ "mutants/M-24-implicit-rounding.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "0.625000",
+   "-0.625000"
+  ]
+ },
+ "mutants/M-24-implicit-rounding.spelf": {
+  "expect": "05§5.1"
+ },
+ "mutants/M-25-byzantine-three-channels.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "7"
+  ]
+ },
+ "mutants/M-25-byzantine-three-channels.spelf": {
+  "expect": "R-412"
+ },
+ "mutants/M-26-spike-at-hold-expiry.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "1.000000",
+   "1.000000"
+  ]
+ },
+ "mutants/M-26-spike-at-hold-expiry.spelf": {
+  "expect": "R-605"
+ },
+ "features/D-02-invariant-broken.spelf": {
+  "expect": "06§6.3"
+ },
+ "features/D-02-loop-no-invariant.fixed.spelf": {
+  "expect": "OK",
+  "out": [
+   "2550"
+  ]
+ },
+ "features/D-02-loop-no-invariant.spelf": {
+  "expect": "R-501"
+ },
+ "features/fix-rounding.spelf": {
+  "expect": "OK",
+  "out": [
+   "2.000000",
+   "2.000000",
+   "3.000000",
+   "2.000000",
+   "-2.000000",
+   "-3.000000",
+   "-2.000000",
+   "-2.000000",
+   "4.000000",
+   "3.000000",
+   "4.000000",
+   "3.000000",
+   "-4.000000",
+   "-4.000000",
+   "-3.000000",
+   "-3.000000"
+  ]
+ },
+ "features/held-expiry.spelf": {
+  "expect": "OK",
+  "out": [
+   "1.000000",
+   "1.000000",
+   "1.000000",
+   "0.000000"
+  ],
+  "stub": "held-expiry.stub.c"
+ },
+ "features/latch-debounce.spelf": {
+  "expect": "OK",
+  "out": [
+   "false",
+   "false",
+   "false",
+   "false",
+   "false",
+   "true",
+   "true"
+  ]
+ },
+ "features/protected-counter.spelf": {
+  "expect": "OK",
+  "out": [
+   "3",
+   "100"
+  ]
+ },
+ "features/stack-budget.spelf": {
+  "expect": "OK"
+ },
+ "features/T-array-alias.spelf": {
+  "expect": "OK",
+  "out": [
+   "10",
+   "99",
+   "30"
+  ]
+ },
+ "features/T-assurance-l3-ok.spelf": {
+  "expect": "OK"
+ },
+ "features/T-assurance-l3-task.spelf": {
+  "expect": "R-304"
+ },
+ "features/T-assurance-l3-voter.spelf": {
+  "expect": "R-605"
+ },
+ "features/T-assurance-l4.spelf": {
+  "expect": "06§6.2"
+ },
+ "features/T-bitops-crc16.spelf": {
+  "expect": "OK",
+  "out": [
+   "10673",
+   "65535"
+  ]
+ },
+ "features/T-bitops-negative.spelf": {
+  "expect": "TYPE"
+ },
+ "features/T-bitops-range.spelf": {
+  "expect": "R-501"
+ },
+ "features/T-byzantine-four-channels.spelf": {
+  "expect": "OK"
+ },
+ "features/T-byzantine-one-round.spelf": {
+  "expect": "R-412"
+ },
+ "features/T-callee-state-write.spelf": {
+  "expect": "R-501"
+ },
+ "features/T-const-point-range.spelf": {
+  "expect": "OK",
+  "out": [
+   "0.010000"
+  ]
+ },
+ "features/T-deactivated-config.spelf": {
+  "expect": "OK"
+ },
+ "features/T-dead-code-by-invariant.spelf": {
+  "expect": "R-606"
+ },
+ "features/T-deadline-after-period.spelf": {
+  "expect": "03§3.2"
+ },
+ "features/T-diverse-claim-false.spelf": {
+  "expect": "R-411"
+ },
+ "features/T-diverse-truly.spelf": {
+  "expect": "OK"
+ },
+ "features/T-encoded-inconsistent.spelf": {
+  "expect": "R-202"
+ },
+ "features/T-float32-mix.spelf": {
+  "expect": "05§5.1"
+ },
+ "features/T-float32.spelf": {
+  "expect": "OK",
+  "out": [
+   "0.300000",
+   "12.500000",
+   "0.700000"
+  ]
+ },
+ "features/T-frame-literal-adopts.spelf": {
+  "expect": "OK",
+  "out": [
+   "0.500000"
+  ]
+ },
+ "features/T-frame-variable-no-adopt.spelf": {
+  "expect": "05§5.2"
+ },
+ "features/T-hold-horizon.spelf": {
+  "expect": "R-605"
+ },
+ "features/T-ieee-negative-zero.spelf": {
+  "expect": "OK",
+  "out": [
+   "0.500000",
+   "0.000000"
+  ]
+ },
+ "features/T-ieee-point-one.spelf": {
+  "expect": "R-501"
+ },
+ "features/T-isr-no-interarrival.spelf": {
+  "expect": "R-306"
+ },
+ "features/T-isr-race.spelf": {
+  "expect": "03§3.3"
+ },
+ "features/T-isr.spelf": {
+  "expect": "OK"
+ },
+ "features/T-latched-is-clean.spelf": {
+  "expect": "OK"
+ },
+ "features/T-launder-call.spelf": {
+  "expect": "R-403"
+ },
+ "features/T-launder-local.spelf": {
+  "expect": "R-404"
+ },
+ "features/T-midvalue-bound.spelf": {
+  "expect": "OK"
+ },
+ "features/T-mode-schedule.spelf": {
+  "expect": "OK"
+ },
+ "features/T-mode-transition-overload.spelf": {
+  "expect": "R-305"
+ },
+ "features/T-mode-unbound.spelf": {
+  "expect": "R-305"
+ },
+ "features/T-nested-protected.spelf": {
+  "expect": "03§3.3"
+ },
+ "features/T-record-fields.spelf": {
+  "expect": "00§0.2-E"
+ },
+ "features/T-record-param-invariant.spelf": {
+  "expect": "OK",
+  "out": [
+   "3"
+  ]
+ },
+ "features/T-reserved-name.spelf": {
+  "expect": "NAME"
+ },
+ "features/T-rotation-not-orthonormal.spelf": {
+  "expect": "05§5.2"
+ },
+ "features/T-rotation-ok.spelf": {
+  "expect": "OK",
+  "out": [
+   "-2.000000",
+   "1.000000",
+   "3.000000",
+   "0.866025"
+  ]
+ },
+ "features/T-rotation-reflection.spelf": {
+  "expect": "05§5.2"
+ },
+ "features/T-rotation-reverse.spelf": {
+  "expect": "05§5.2"
+ },
+ "features/T-schedulable.spelf": {
+  "expect": "OK"
+ },
+ "features/T-slow-clock.spelf": {
+  "expect": "R-307"
+ },
+ "features/T-ts-branch-mismatch.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-cpu-touches-device.spelf": {
+  "expect": "R-205"
+ },
+ "features/T-ts-deliver-open.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-dma-wrong-region.spelf": {
+  "expect": "R-205"
+ },
+ "features/T-ts-leak.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-loop-consume.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-missing-witness-decl.spelf": {
+  "expect": "R-205"
+ },
+ "features/T-ts-no-put.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-race.spelf": {
+  "expect": "03§3.3"
+ },
+ "features/T-ts-reclaim-without-completion.spelf": {
+  "expect": "R-205"
+ },
+ "features/T-ts-reentrant.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-region-overflow.spelf": {
+  "expect": "R-209"
+ },
+ "features/T-ts-take-twice.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-undeclared-transition.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-use-after-move.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-ts-verified-write.spelf": {
+  "expect": "R-203"
+ },
+ "features/T-type-alias-cycle.spelf": {
+  "expect": "NAME"
+ },
+ "features/T-type-alias-unit.spelf": {
+  "expect": "05§5.2"
+ },
+ "features/T-type-alias.spelf": {
+  "expect": "OK",
+  "out": [
+   "3"
+  ]
+ },
+ "features/T-typestate-dma.spelf": {
+  "expect": "OK",
+  "out": [
+   "42",
+   "8"
+  ],
+  "stub": "T-typestate-dma.stub.c"
+ },
+ "features/T-typestate-slot.spelf": {
+  "expect": "OK",
+  "out": [
+   "3",
+   "0"
+  ]
+ },
+ "features/T-typestate-union.spelf": {
+  "expect": "OK"
+ },
+ "features/T-unbounded-hold.spelf": {
+  "expect": "R-605"
+ },
+ "features/T-unbounded-midvalue.spelf": {
+  "expect": "OK"
+ },
+ "features/T-unreachable-stmt.spelf": {
+  "expect": "R-606"
+ },
+ "features/T-unschedulable.spelf": {
+  "expect": "R-304"
+ },
+ "features/T-vote-tolerance-bare.spelf": {
+  "expect": "R-413"
+ },
+ "features/T-vote-tolerance-ok.spelf": {
+  "expect": "OK"
+ },
+ "features/T-vote-tolerance.spelf": {
+  "expect": "R-413"
+ },
+ "features/T-voter-channel-count.spelf": {
+  "expect": "R-412"
+ },
+ "features/T-watchdog-inactive.spelf": {
+  "expect": "R-307"
+ },
+ "features/T-watchdog-not-fed.spelf": {
+  "expect": "R-307"
+ },
+ "features/T-watchdog-slow.spelf": {
+  "expect": "R-307"
+ },
+ "ok/ccsds_primary_header.spelf": {
+  "expect": "OK",
+  "out": [
+   "0",
+   "1537",
+   "1",
+   "3",
+   "42",
+   "60",
+   "3",
+   "2"
+  ]
+ },
+ "ok/px4_rate_control.spelf": {
+  "expect": "OK"
+ },
+ "ok/smoke.spelf": {
+  "expect": "OK",
+  "out": [
+   "100",
+   "27",
+   "1"
+  ]
+ }
+}

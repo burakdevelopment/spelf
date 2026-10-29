@@ -1,0 +1,12 @@
+module Tutorial.Narrowing
+
+type Bias = Float<1, -30000.0..=30000.0>;
+
+fn to_bus(bh: Bias) -> Int<-32768..=32767> {
+  narrow<Int<-32768..=32767>>(bh)
+}
+
+fn main() -> Int<0..=255> {
+  print(to_bus(1234.5));
+  0
+}

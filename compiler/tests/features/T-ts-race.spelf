@@ -1,0 +1,18 @@
+module Feature.T_ts_race
+resource Slot { Open, Sealed } {
+  data: [Int<0..=255>; 64],
+  len: Int<0..=64>,
+}
+transition Slot: Open -> Sealed;
+transition Slot: Sealed -> Open;
+state slot: Slot<Open> = Slot { data: [0; 64], len: 0 };
+fn seal(s: Slot<Open>) -> Slot<Sealed> { transit<Sealed>(s) }
+fn deliver(s: &Slot<Sealed>) -> Int<0..=64> { s.len }
+fn reopen(s: Slot<Sealed>) -> Slot<Open> {
+  let o = transit<Open>(s);
+  o.len = 0;
+  o
+}
+
+task A(period = 10[ms], priority = 20) { put(slot, reopen(seal(take(slot)))); }
+task B(period = 20[ms], priority = 10) { put(slot, reopen(seal(take(slot)))); }

@@ -1,0 +1,76 @@
+module Examples.Ccsds @assurance(L1)
+
+sealed enum Status { Valid, Truncated, BadVersion, Idle }
+
+encoded DataLength : Int<0..=65535> -> Int<1..=65536> {
+  decode(w) = w + 1,
+  encode(s) = s - 1,
+}
+
+const IDLE_APID: Int<0..=2047> = 2047;
+const HDR: Int<6..=6> = 6;
+
+fn word(hi: Int<0..=255>, lo: Int<0..=255>) -> Int<0..=65535> {
+  hi * 256 + lo
+}
+
+fn version_of(w0: Int<0..=65535>) -> Int<0..=7> { bits(w0, 13, 3) }
+fn apid_of(w0: Int<0..=65535>) -> Int<0..=2047> { bits(w0, 0, 11) }
+
+fn data_octets(raw: Wire<DataLength>) -> Int<1..=65536> {
+  decode(raw)
+}
+
+fn decode_header(buf: [Int<0..=255>; 16], rx_len: Int<0..=16>) -> Status {
+  if rx_len < HDR {
+    return Status::Truncated;
+  }
+  let w0 = word(buf[0], buf[1]);
+  if version_of(w0) != 0 {
+    return Status::BadVersion;
+  }
+  if apid_of(w0) == IDLE_APID {
+    return Status::Idle;
+  }
+  let dlen = data_octets(wire<DataLength>(word(buf[4], buf[5])));
+  if HDR + dlen > rx_len {
+    return Status::Truncated;
+  }
+  Status::Valid
+}
+
+fn status_code(s: Status) -> Int<0..=3> {
+  match s {
+    Status::Valid => 0,
+    Status::Truncated => 1,
+    Status::BadVersion => 2,
+    Status::Idle => 3,
+  }
+}
+
+fn payload_sum(buf: [Int<0..=255>; 16], rx_len: Int<0..=16>) -> Int<0..=2550> {
+  var s: Int<0..=2550> = 0;
+  for i in 6..16 invariant s <= 255 * (i - 6) {
+    if i < rx_len {
+      s = s + buf[i];
+    }
+  }
+  s
+}
+
+fn main() -> Int<0..=255> {
+  var p: [Int<0..=255>; 16] = [0; 16];
+  p[0] = 6;
+  p[1] = 1;
+  p[2] = 192;
+  p[3] = 42;
+  p[4] = 0;
+  p[5] = 5;
+  for k in 6..12 {
+    p[k] = 10;
+  }
+  print(status_code(decode_header(p, 12)));
+  print(status_code(decode_header(p, 11)));
+  print(payload_sum(p, 12));
+  0
+}

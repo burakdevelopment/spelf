@@ -1,0 +1,23 @@
+module Feature.HeldExpiry
+extern fn now_mono() -> Instant<Monotonic>;
+extern fn sensor() -> Suspect<Float<rad/s>>;
+state last: Held<Float<rad/s>> = held(0.0[rad/s], max_age = 50[ms]);
+fn held_or_zero(now: Instant<Monotonic>) -> Float<rad/s> {
+  match read(last, now) { Fresh(v) => v, Expired => 0.0[rad/s] }
+}
+fn estimate() -> Float<rad/s> {
+  let now = now_mono();
+  match sensor() {
+    Valid(w) => { refresh(last, w, now); w }
+    Saturated(w) => held_or_zero(now),
+    Stale(w) => held_or_zero(now),
+    Invalid => held_or_zero(now),
+  }
+}
+fn main() -> Int<0..=255> {
+  print(estimate());
+  print(estimate());
+  print(estimate());
+  print(estimate());
+  0
+}

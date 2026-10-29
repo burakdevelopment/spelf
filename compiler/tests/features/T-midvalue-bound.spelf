@@ -1,0 +1,10 @@
+module Feature.MidValueBound
+fault_hypothesis FH_3 { channel_faults = 1, fault_mode = byzantine }
+@output_bound(hypothesis = FH_3, horizon = 4, tolerance = 2, max_step = 5, bound = 2)
+fn mid_value(a: Int<-1000..=1000>, b: Int<-1000..=1000>, c: Int<-1000..=1000>) -> Int<-1000..=1000> {
+  if a <= b {
+    if b <= c { b } else { if a <= c { c } else { a } }
+  } else {
+    if a <= c { a } else { if b <= c { c } else { b } }
+  }
+}

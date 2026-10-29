@@ -1,0 +1,22 @@
+module Tutorial.Sensors
+
+type Alt = Float32<m, 0.0..=2500.0>;
+
+state armed: Latch = latch(persists_for = 5);
+state touchdown: Latch = latch(persists_for = 3);
+
+fn contact(r: Suspect<bool>) -> Int<0..=1> {
+  match r {
+    Valid(c) => if c { 1 } else { 0 },
+    _ => 0,
+  }
+}
+
+fn engines_off(alt: Suspect<Alt>, l1: Suspect<bool>, l2: Suspect<bool>, l3: Suspect<bool>) -> bool {
+  match alt {
+    Valid(h) => feed(armed, h < 40.0[m]),
+    _ => feed(armed, false),
+  }
+  feed(touchdown, is_set(armed) && contact(l1) + contact(l2) + contact(l3) >= 2);
+  is_set(touchdown)
+}

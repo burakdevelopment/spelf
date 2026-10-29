@@ -1,0 +1,7 @@
+module Feature.ModeTransitionOverload
+mode_lattice Mission { Cruise -> SafeHold, SafeHold -> Cruise }
+task Gnc(period = 10[ms], priority = 30, wcet = 3[ms]) { }
+task Payload(period = 50[ms], priority = 20, wcet = 30[ms]) { }
+task Health(period = 20[ms], priority = 25, wcet = 1[ms]) { }
+schedule Nominal for { Cruise } { Gnc, Payload, Health }
+schedule Safe for { SafeHold } { Gnc(period = 5[ms]), Health }

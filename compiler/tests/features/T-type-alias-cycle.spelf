@@ -1,0 +1,4 @@
+module Feature.TypeAliasCycle
+type A = [B; 2];
+type B = [A; 2];
+fn f(x: A) -> Int<0..=1> { 0 }

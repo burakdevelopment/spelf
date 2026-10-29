@@ -1,0 +1,47 @@
+module Feature.TypestateSlot
+resource Slot { Open, Sealed } {
+  data: [Int<0..=255>; 64],
+  len: Int<0..=64>,
+}
+transition Slot: Open -> Sealed;
+transition Slot: Sealed -> Open;
+state slot: Slot<Open> = Slot { data: [0; 64], len: 0 };
+resource Image { Raw, Verified } write { Raw } {
+  code: [Int<0..=255>; 16],
+  sum: Int<0..=4080>,
+}
+transition Image: Raw -> Verified;
+transition Image: Verified -> Raw;
+state img: Image<Raw> = Image { code: [0; 16], sum: 0 };
+
+fn append(s: Slot<Open>, b: Int<0..=255>) -> Slot<Open> {
+  if s.len < 64 {
+    s.data[s.len] = b;
+    s.len = s.len + 1;
+  }
+  s
+}
+fn deliver(s: &Slot<Sealed>) -> Int<0..=64> { s.len }
+fn reopen(s: Slot<Sealed>) -> Slot<Open> {
+  let o = transit<Open>(s);
+  o.len = 0;
+  o
+}
+fn verify(i: Image<Raw>) -> Image<Verified> {
+  var acc: Int<0..=4080> = 0;
+  for k in 0..16 invariant acc <= 255 * k {
+    acc = acc + i.code[k];
+  }
+  i.sum = acc;
+  transit<Verified>(i)
+}
+fn use_image(v: &Image<Verified>) -> Int<0..=4080> { v.sum }
+fn main() {
+  let s = append(append(append(take(slot), 1), 2), 3);
+  let z = transit<Sealed>(s);
+  print(deliver(z));
+  put(slot, reopen(z));
+  let v = verify(take(img));
+  print(use_image(v));
+  put(img, transit<Raw>(v));
+}

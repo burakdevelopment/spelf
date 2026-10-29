@@ -1,0 +1,5 @@
+module Feature.ModeUnbound
+mode_lattice Mission { Cruise -> Science, any -> SafeHold }
+task Gnc(period = 10[ms], priority = 30, wcet = 2[ms]) { }
+schedule Nominal for { Cruise } { Gnc }
+schedule Safe for { SafeHold } { Gnc }

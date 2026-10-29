@@ -1,0 +1,22 @@
+module Spacecraft.Adcs @assurance(L2)
+type Q = Float<1, -1.0..=1.0>;
+type Rate = Float<rad/s, -0.5..=0.5>;
+type Torque = Float<N*m, -0.01..=0.01>;
+const KP: Float<N*m> = 0.02[N*m];
+const KD: Float<N*m*s/rad> = 0.15[N*m*s/rad];
+
+fn wl_adcs(k: Int<0..=2>, qw: Q, qx: Q, qy: Q, qz: Q, rw: Q, rx: Q, ry: Q, rz: Q,
+           wx: Rate, wy: Rate, wz: Rate) -> Torque {
+  let ew = rw * qw + rx * qx + ry * qy + rz * qz;
+  let ex = rw * qx - rx * qw - ry * qz + rz * qy;
+  let ey = rw * qy + rx * qz - ry * qw - rz * qx;
+  let ez = rw * qz - rx * qy + ry * qx - rz * qw;
+  let e0 = if k == 0 { ex } else { if k == 1 { ey } else { ez } };
+  let w0 = if k == 0 { wx } else { if k == 1 { wy } else { wz } };
+  let e = if ew < 0.0 { 0.0 - e0 } else { e0 };
+  let t = 0.0[N*m] - KP * e - KD * w0;
+  match saturate(t, -0.01[N*m], 0.01[N*m]) {
+    Unclamped(v) => v,
+    Clamped(v) => v,
+  }
+}

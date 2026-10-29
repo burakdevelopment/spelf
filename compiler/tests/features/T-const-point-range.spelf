@@ -1,0 +1,10 @@
+module Feature.ConstPointRange
+const TMAX: Float<N*m> = 0.01[N*m];
+const KP: Float<N*m> = 0.02[N*m];
+fn torque(e: Float<1, -4.0..=4.0>) -> Float<N*m, -0.01..=0.01> {
+  match saturate(0.0[N*m] - KP * e, -TMAX, TMAX) {
+    Unclamped(v) => v,
+    Clamped(v) => v,
+  }
+}
+fn main() { print(torque(-3.0)); }

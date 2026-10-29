@@ -1,0 +1,8 @@
+module Feature.VoteTolBare
+fault_hypothesis FH { channel_faults = 1, fault_mode = value }
+redundancy G { channels = 3, hypothesis = FH, exchange = consistent_broadcast }
+@voter(G, tolerance = 0.5[deg])
+fn vote(a: Float<deg, -90.0..=90.0>, b: Float<deg, -90.0..=90.0>, c: Float<deg, -90.0..=90.0>) -> Float<deg, -90.0..=90.0> {
+  if a <= b { if b <= c { b } else { if a <= c { c } else { a } } }
+  else { if a <= c { a } else { if b <= c { c } else { b } } }
+}

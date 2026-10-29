@@ -1,0 +1,8 @@
+module Fixed.M02
+fn total_impulse(ground: Float<lbf*s>, nav: Float<N*s>) -> Float<N*s> {
+  nav + convert<N*s>(ground)
+}
+fn main() -> Int<0..=255> {
+  print(total_impulse(1.0[lbf*s], 0.0[N*s]));
+  0
+}

@@ -1,0 +1,11 @@
+module Mutant.M12
+extern fn read_contact() -> Suspect<bool>;
+state touchdown: bool = false;
+fn update() {
+  match read_contact() {
+    Valid(c) => {
+      if c { touchdown = true; }
+    }
+    _ => {}
+  }
+}

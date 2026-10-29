@@ -1,0 +1,12 @@
+module Fixed.M13
+fn enqueue() -> Int<0..=1> {
+  var q: Bounded<Int<0..=255>, 8> = empty();
+  match push(q, 42) {
+    Ok => 0,
+    Full => 1,
+  }
+}
+fn main() -> Int<0..=255> {
+  print(enqueue());
+  0
+}

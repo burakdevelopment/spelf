@@ -1,0 +1,4 @@
+module Mutant.M02
+fn total_impulse(ground: Float<lbf*s>, nav: Float<N*s>) -> Float<N*s> {
+  nav + ground
+}

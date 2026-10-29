@@ -1,0 +1,11 @@
+module Mutant.M25
+fault_hypothesis FH_FCS { channel_faults = 1, fault_mode = byzantine }
+redundancy FCS { channels = 3, hypothesis = FH_FCS, exchange = full_mesh, rounds = 2, authenticated = false }
+@voter(FCS)
+fn mid_value(a: Int<-1000..=1000>, b: Int<-1000..=1000>, c: Int<-1000..=1000>) -> Int<-1000..=1000> {
+  if a <= b {
+    if b <= c { b } else { if a <= c { c } else { a } }
+  } else {
+    if a <= c { a } else { if b <= c { c } else { b } }
+  }
+}

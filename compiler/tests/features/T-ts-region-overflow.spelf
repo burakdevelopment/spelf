@@ -1,0 +1,8 @@
+module Feature.T_ts_region_overflow
+region dma_ram { size = 2[KiB], kind = dma }
+resource Frame { Cpu, Device } in dma_ram device { Device } { words: [Int<0..=65535>; 528] }
+resource Done { Fired } { }
+transition Frame: Cpu -> Device;
+transition Frame: Device -> Cpu witness Done;
+state a: Frame<Cpu> = Frame { words: [0; 528] };
+state b: Frame<Cpu> = Frame { words: [0; 528] };

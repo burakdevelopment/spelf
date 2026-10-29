@@ -1,0 +1,71 @@
+module Fighter.Fbw @assurance(L2)
+type Rate = Float32<rad/s, -2.0..=2.0>;
+type Aoa = Float32<rad, -0.6..=0.6>;
+type Defl = Float32<rad, -0.44..=0.44>;
+type Qbar = Float32<Pa, 1000.0..=60000.0>;
+const QMAX: Float32<rad/s> = 0.35[rad/s];
+const ALIM: Float32<rad> = 0.45[rad];
+const KLIM: Float32<1/s> = 2.0[1/s];
+const DT: Float32<s> = 0.0125[s];
+const RSTEP: Float32<rad> = 0.0125[rad];
+state xi: Float32<rad, -1.0..=1.0> = 0.0[rad];
+state dprev: Defl = 0.0[rad];
+
+fn med3(a: Rate, b: Rate, c: Rate) -> Rate {
+  let lo = if a < b { a } else { b };
+  let hi = if a < b { b } else { a };
+  let m = if hi < c { hi } else { c };
+  if lo < m { m } else { lo }
+}
+fn med3a(a: Aoa, b: Aoa, c: Aoa) -> Aoa {
+  let lo = if a < b { a } else { b };
+  let hi = if a < b { b } else { a };
+  let m = if hi < c { hi } else { c };
+  if lo < m { m } else { lo }
+}
+fn sched(qb: Qbar, k0: Float32<1, 0.0..=4.0>, k1: Float32<1, 0.0..=4.0>, k2: Float32<1, 0.0..=4.0>,
+         k3: Float32<1, 0.0..=4.0>) -> Float32<1, -4.0..=8.0> {
+  if qb < 10000.0[Pa] {
+    let w: Float32<1, 0.0..=1.0> = (qb - 1000.0[Pa]) / 9000.0[Pa];
+    k0 + (k1 - k0) * w
+  } else {
+    if qb < 30000.0[Pa] {
+      let w: Float32<1, 0.0..=1.0> = (qb - 10000.0[Pa]) / 20000.0[Pa];
+      k1 + (k2 - k1) * w
+    } else {
+      let w: Float32<1, 0.0..=1.0> = (qb - 30000.0[Pa]) / 30000.0[Pa];
+      k2 + (k3 - k2) * w
+    }
+  }
+}
+fn rate_lim(d: Defl, p: Defl) -> Defl {
+  let up = p + RSTEP;
+  let dn = p - RSTEP;
+  if d > up { up } else { if d < dn { dn } else { d } }
+}
+fn fbw_step(stick: Float32<1, -1.0..=1.0>, q1: Rate, q2: Rate, q3: Rate, a1: Aoa, a2: Aoa, a3: Aoa,
+            qb: Qbar) -> Defl {
+  let q = med3(q1, q2, q3);
+  let a = med3a(a1, a2, a3);
+  let kq = sched(qb, 1.2, 0.6, 0.35, 0.22) * 1.0[s];
+  let ka = sched(qb, 3.0, 1.6, 0.9, 0.55);
+  let ki = sched(qb, 1.5, 0.8, 0.45, 0.3);
+  let excess = if a > ALIM { a - ALIM } else { 0.0[rad] };
+  let qcmd = stick * QMAX - KLIM * excess;
+  let e = qcmd - q;
+  let raw = kq * e + ki * xi - ka * a;
+  match saturate(raw, -0.44[rad], 0.44[rad]) {
+    Unclamped(d) => {
+      let xn = xi + e * DT;
+      xi = if xn > 1.0[rad] { 1.0[rad] } else { if xn < -1.0[rad] { -1.0[rad] } else { xn } };
+      let lim = rate_lim(d, dprev);
+      dprev = lim;
+      lim
+    }
+    Clamped(d) => {
+      let lim = rate_lim(d, dprev);
+      dprev = lim;
+      lim
+    }
+  }
+}

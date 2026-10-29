@@ -1,0 +1,36 @@
+module Feature.TypestateUnion
+region dma_ram { size = 1[KiB], kind = dma }
+resource DmaBuf { Cpu, Device } in dma_ram device { Device } {
+  words: [Int<0..=65535>; 32],
+  count: Int<0..=32>,
+}
+resource DmaDone { Fired } { }
+transition DmaBuf: Cpu -> Device;
+transition DmaBuf: Device -> Cpu witness DmaDone;
+extern fn bc_start(b: &DmaBuf<Device>);
+extern fn bc_done() -> bool;
+extern fn bc_wait() -> DmaDone<Fired>;
+state bus: DmaBuf<Cpu | Device> = DmaBuf { words: [0; 32], count: 0 };
+state last: Int<0..=65535> = 0;
+
+fn start(b: DmaBuf<Cpu>) -> DmaBuf<Device> {
+  b.words[0] = 7;
+  b.count = 1;
+  let d = transit<Device>(b);
+  bc_start(d);
+  d
+}
+task Bc(period = 10[ms], priority = 20) {
+  match take(bus) {
+    Cpu(b) => { put(bus, start(b)); }
+    Device(d) => {
+      if bc_done() {
+        let c = transit<Cpu>(d, bc_wait());
+        last = c.words[1];
+        put(bus, c);
+      } else {
+        put(bus, d);
+      }
+    }
+  }
+}

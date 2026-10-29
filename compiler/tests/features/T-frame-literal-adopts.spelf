@@ -1,0 +1,8 @@
+module Feature.FrameLiteral
+fn clamp(v: Float<uT @ Body, -9.0..=9.0>) -> Float<uT @ Body, 0.0..=9.0> {
+  if v < 0.0[uT] { 0.0[uT] } else { v }
+}
+fn main() -> Int<0..=255> {
+  print(clamp(0.5[uT]));
+  0
+}

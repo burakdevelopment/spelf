@@ -1,0 +1,4 @@
+module Fixed.M03
+fn combine(a: Float<m/s @ ECI>, b: Float<m/s @ ECI>) -> Float<m/s @ ECI> {
+  a + b
+}

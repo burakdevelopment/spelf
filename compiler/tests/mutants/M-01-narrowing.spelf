@@ -1,0 +1,4 @@
+module Mutant.M01
+fn horizontal_bias(bh: Float<1>) -> Int<-32768..=32767> {
+  narrow<Int<-32768..=32767>>(bh)
+}

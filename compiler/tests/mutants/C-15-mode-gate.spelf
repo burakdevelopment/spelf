@@ -1,0 +1,7 @@
+module Mutant.C15
+mode_lattice Mission { Prelaunch -> Ascent, Ascent -> Cruise }
+flight_phase = { Ascent, Cruise };
+fn prelaunch_alignment() -> Int<0..=1> effects { mode(Prelaunch) } { 1 }
+fn cruise_step() -> Int<0..=1> effects { mode(Ascent | Cruise) } {
+  prelaunch_alignment()
+}

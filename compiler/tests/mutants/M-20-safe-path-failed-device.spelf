@@ -1,0 +1,15 @@
+module Mutant.M20
+fault_hypothesis FH_DEGRADED { failed = { Gyro, StarTracker } }
+extern fn read_gyro() -> Suspect<Float<rad/s>> effects { io(Gyro) };
+extern fn read_sun() -> Suspect<Float<rad>> effects { io(SunSensor) };
+extern fn set_wheels(t: Float<N*m>) effects { io(Wheels) };
+fn damp_rates() {
+  match read_gyro() {
+    Valid(w) => set_wheels(w * -0.1[N*m*s/rad]),
+    _ => set_wheels(0.0[N*m]),
+  }
+}
+@safe_path(FH_DEGRADED)
+fn enter_survival() {
+  damp_rates();
+}

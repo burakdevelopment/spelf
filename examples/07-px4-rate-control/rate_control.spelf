@@ -1,0 +1,56 @@
+module Px4.RateControl
+
+type Axis = Int<0..=2>;
+type Rate = Float<rad/s, -35.0..=35.0>;
+type RateErr = Float<rad/s, -70.0..=70.0>;
+type Accel = Float<rad/s/s, -500.0..=500.0>;
+type Dt = Float<s, 0.000125..=0.02>;
+type Torque = Float<1, -50.0..=50.0>;
+type Unit01 = Float<1, 0.0..=1.0>;
+
+config Gains {
+  p: Float<s/rad, 0.0..=0.6> = 0.15[s/rad],
+  i: Float<1/rad, 0.0..=0.6> = 0.2[1/rad],
+  d: Float<s*s/rad, 0.0..=0.01> = 0.003[s*s/rad],
+  ff: Float<s/rad, 0.0..=0.5> = 0.0[s/rad],
+  lim_int: Float<1, 0.0..=1.0> = 0.3,
+}
+
+state integ: [Float<1, -1.0..=1.0>; 3] = [0.0; 3];
+
+fn axis_torque(k: Axis, err: RateErr, rate_sp: Rate, accel: Accel) -> Torque {
+  Gains.p * err + integ[k] - Gains.d * accel + Gains.ff * rate_sp
+}
+
+fn axis_integrate(k: Axis, rate_error: RateErr, dt: Dt, sat_pos: bool, sat_neg: bool) {
+  var err: RateErr = rate_error;
+  if sat_pos {
+    if err > 0.0[rad/s] { err = 0.0[rad/s]; }
+  }
+  if sat_neg {
+    if err < 0.0[rad/s] { err = 0.0[rad/s]; }
+  }
+  let x = err / 6.981317007977318[rad/s];
+  let q = 1.0 - x * x;
+  let i_factor: Unit01 = if q < 0.0 { 0.0 } else { q };
+  let rate_i = integ[k] + i_factor * Gains.i * err * dt;
+  let lim = Gains.lim_int;
+  integ[k] = if rate_i > lim { lim } else { if rate_i < 0.0 - lim { 0.0 - lim } else { rate_i } };
+}
+
+fn update(rate: [Rate; 3], rate_sp: [Rate; 3], accel: [Accel; 3], dt: Dt, landed: bool,
+          sat_pos: [bool; 3], sat_neg: [bool; 3]) -> [Torque; 3] {
+  var torque: [Torque; 3] = [0.0; 3];
+  for k in 0..3 {
+    let err = rate_sp[k] - rate[k];
+    torque[k] = axis_torque(k, err, rate_sp[k], accel[k]);
+    if !landed {
+      axis_integrate(k, err, dt, sat_pos[k], sat_neg[k]);
+    }
+  }
+  torque
+}
+
+fn reset_integral() {
+  for k in 0..3 { integ[k] = 0.0; }
+}

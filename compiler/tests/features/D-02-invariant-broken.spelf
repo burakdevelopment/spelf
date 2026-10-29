@@ -1,0 +1,8 @@
+module Feature.D02b
+fn payload_sum(buf: [Int<0..=255>; 16]) -> Int<0..=2550> {
+  var s: Int<0..=2550> = 0;
+  for i in 6..16 invariant s <= 200 * (i - 6) {
+    s = s + buf[i];
+  }
+  s
+}

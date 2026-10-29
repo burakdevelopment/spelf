@@ -1,0 +1,14 @@
+module Feature.DiverseFalse
+extern fn read_gyro_a() -> Int<0..=4095> effects { io(GyroA) };
+extern fn read_gyro_b() -> Int<0..=4095> effects { io(GyroB) };
+fn bias_filter(raw: Int<0..=4095>) -> Int<-2048..=2047> { raw - 2048 }
+@failover(backup = rate_b)
+@diverse(
+  hardware     = diverse,
+  compiler     = common(because = "single toolchain"),
+  source       = diverse,
+  requirements = common(because = "IV&V"),
+  team         = common(because = "review"),
+)
+fn rate_a() -> Int<-2048..=2047> { bias_filter(read_gyro_a()) }
+fn rate_b() -> Int<-2048..=2047> { bias_filter(read_gyro_b()) }

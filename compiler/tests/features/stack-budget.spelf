@@ -1,0 +1,14 @@
+module Feature.StackBudget
+fn scale(x: Int<0..=1000>) -> Int<0..=2000> { x * 2 }
+fn filter(x: Int<0..=1000>, y: Int<0..=1000>) -> Int<0..=3000> { scale(x) + (y - y / 2) }
+protected Shared {
+  var v: Int<0..=3000> = 0;
+  fn put(x: Int<0..=3000>) { v = x; }
+  fn get() -> Int<0..=3000> { v }
+}
+task Sampler(period = 10[ms], priority = 20, stack = 512) {
+  Shared.put(filter(10, 20));
+}
+task Reporter(period = 100[ms], priority = 5, stack = 512) {
+  let x = Shared.get();
+}

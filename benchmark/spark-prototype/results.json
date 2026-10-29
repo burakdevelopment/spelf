@@ -1,0 +1,47 @@
+{
+ "library_clean": true,
+ "cases": {
+  "L-10a": {
+   "title": "with the Suspect library: the value is read without checking the tag (M-10)",
+   "question": "a",
+   "verdict": "◆",
+   "evidence": "medium: discriminant check might fail",
+   "contract_lines_fixed": 1
+  },
+  "L-11b": {
+   "title": "WITHOUT the Held library the last good value persists without an age limit (M-11)",
+   "question": "b",
+   "verdict": "✗",
+   "evidence": "",
+   "contract_lines_fixed": 3
+  },
+  "L-11c": {
+   "title": "with an information-flow contract (Depends): sensor as volatile external state, honest contract on both (M-11)",
+   "question": "b",
+   "verdict": "✗",
+   "evidence": "",
+   "contract_lines_fixed": 1
+  },
+  "L-12b": {
+   "title": "WITHOUT Latch a transient contact signal is latched (M-12, Mars Polar Lander)",
+   "question": "b",
+   "verdict": "✗",
+   "evidence": "",
+   "contract_lines_fixed": 2
+  },
+  "L-18a": {
+   "title": "with the Clamped library: the clamping information is ignored and the value read (M-18)",
+   "question": "a",
+   "verdict": "◆",
+   "evidence": "medium: discriminant check might fail",
+   "contract_lines_fixed": 2
+  },
+  "L-24b": {
+   "title": "WITHOUT Requantize: implicit rounding in fixed point (M-24)",
+   "question": "b",
+   "verdict": "✗",
+   "evidence": "",
+   "contract_lines_fixed": 1
+  }
+ }
+}

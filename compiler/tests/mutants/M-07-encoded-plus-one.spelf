@@ -1,0 +1,8 @@
+module Mutant.M07
+encoded DataLength : Int<0..=65535> -> Int<1..=65536> {
+  decode(w) = w + 1,
+  encode(s) = s - 1,
+}
+fn data_field_octets(raw: Wire<DataLength>) -> Int<1..=65536> {
+  raw
+}

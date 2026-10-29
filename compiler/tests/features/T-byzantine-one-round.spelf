@@ -1,0 +1,3 @@
+module Feature.Byz1Round
+fault_hypothesis FH_FCS { channel_faults = 1, fault_mode = byzantine }
+redundancy FCS { channels = 4, hypothesis = FH_FCS, exchange = full_mesh, rounds = 1, authenticated = false }

@@ -1,0 +1,24 @@
+module Fixed.M18
+sealed enum Integrator { Run, Freeze }
+fn torque_command(u: Float<N*m>) -> Float<N*m> {
+  match saturate(u, -1.0[N*m], 1.0[N*m]) {
+    Unclamped(v) => v,
+    Clamped(v) => v,
+  }
+}
+fn integrator_mode(u: Float<N*m>) -> Integrator {
+  match saturate(u, -1.0[N*m], 1.0[N*m]) {
+    Unclamped(v) => Integrator::Run,
+    Clamped(v) => Integrator::Freeze,
+  }
+}
+fn code(i: Integrator) -> Int<0..=1> {
+  match i { Integrator::Run => 0, Integrator::Freeze => 1 }
+}
+fn main() -> Int<0..=255> {
+  print(torque_command(3.0[N*m]));
+  print(code(integrator_mode(3.0[N*m])));
+  print(torque_command(0.3[N*m]));
+  print(code(integrator_mode(0.3[N*m])));
+  0
+}

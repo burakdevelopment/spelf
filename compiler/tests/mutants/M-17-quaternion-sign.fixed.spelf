@@ -1,0 +1,27 @@
+module Fixed.M17
+struct Quat {
+  w: Float<1, -1.0..=1.0>,
+  x: Float<1, -1.0..=1.0>,
+  y: Float<1, -1.0..=1.0>,
+  z: Float<1, -1.0..=1.0>,
+} invariant w >= 0.0
+fn error_quat(w: Float<1, -1.0..=1.0>, x: Float<1, -1.0..=1.0>,
+              y: Float<1, -1.0..=1.0>, z: Float<1, -1.0..=1.0>) -> Quat {
+  if w < 0.0 {
+    Quat { w: 0.0 - w, x: 0.0 - x, y: 0.0 - y, z: 0.0 - z }
+  } else {
+    Quat { w: w, x: x, y: y, z: z }
+  }
+}
+fn half_angle_cos(q: Quat) -> Float<1, 0.0..=1.0> {
+  q.w
+}
+fn main() -> Int<0..=255> {
+  let q = error_quat(-0.6, 0.8, 0.0, 0.0);
+  print(q.w);
+  print(q.x);
+  let r = error_quat(0.6, 0.8, 0.0, 0.0);
+  print(r.x);
+  print(half_angle_cos(q));
+  0
+}

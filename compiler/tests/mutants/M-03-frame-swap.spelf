@@ -1,0 +1,4 @@
+module Mutant.M03
+fn combine(a: Float<m/s @ ECI>, b: Float<m/s @ Body>) -> Float<m/s @ ECI> {
+  a + b
+}

@@ -1,0 +1,6 @@
+module Mutant.M05
+extern fn now_met() -> Instant<MET>;
+extern fn now_tai() -> Instant<TAI>;
+fn elapsed() -> Float<s> {
+  now_tai() - now_met()
+}

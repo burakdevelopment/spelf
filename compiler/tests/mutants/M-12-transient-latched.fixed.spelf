@@ -1,0 +1,12 @@
+module Fixed.M12
+extern fn read_contact() -> Suspect<bool>;
+state touchdown: Latch = latch(persists_for = 3);
+fn update() {
+  match read_contact() {
+    Valid(c) => feed(touchdown, c),
+    _ => feed(touchdown, false),
+  }
+}
+fn engines_may_stop() -> bool {
+  is_set(touchdown)
+}

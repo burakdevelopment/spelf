@@ -1,0 +1,4 @@
+module Feature.Nested
+protected A { var x: Int<0..=10> = 0; fn get() -> Int<0..=10> { x } }
+protected B { var y: Int<0..=10> = 0; fn copy() { y = A.get(); } }
+task T1(period = 10[ms], priority = 20) { B.copy(); }

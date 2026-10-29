@@ -1,0 +1,5 @@
+module Fixed.M05
+extern fn now_tai() -> Instant<TAI>;
+fn elapsed(start: Instant<TAI>) -> Float<s> {
+  now_tai() - start
+}

@@ -1,0 +1,2 @@
+module Feature.BitopsRange
+fn f(a: Int<0..=255>, b: Int<0..=1>) -> Int<0..=127> { xor(a, b) }

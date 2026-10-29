@@ -1,0 +1,14 @@
+module Fixed.M21
+fn depth(n: Int<0..=100>) -> Int<0..=100> {
+  var d: Int<0..=100> = 0;
+  for i in 0..100 {
+    if i < n {
+      if d < 100 { d = d + 1; }
+    }
+  }
+  d
+}
+fn main() -> Int<0..=255> {
+  print(depth(42));
+  0
+}

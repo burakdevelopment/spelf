@@ -1,0 +1,17 @@
+module Spacecraft.Crc16
+fn wl_crc16(buf: [Int<0..=255>; 64], n: Int<0..=64>) -> Int<0..=65535> {
+  var crc: Int<0..=65535> = 65535;
+  for i in 0..64 {
+    if i < n {
+      crc = xor(crc, shl(buf[i], 8));
+      for b in 0..8 {
+        if band(crc, 32768) != 0 {
+          crc = xor(band(shl(crc, 1), 65535), 4129);
+        } else {
+          crc = band(shl(crc, 1), 65535);
+        }
+      }
+    }
+  }
+  crc
+}

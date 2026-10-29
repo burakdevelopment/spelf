@@ -1,0 +1,6 @@
+module Mutant.M09
+state rate_est: Float<rad/s> = 0.0[rad/s];
+fn estimator() { rate_est = rate_est * 0.9; }
+fn telemetry() -> Float<rad/s> { rate_est }
+task Gnc(period = 10[ms], priority = 40) { estimator(); }
+task Tlm(period = 100[ms], priority = 10) { let x = telemetry(); }

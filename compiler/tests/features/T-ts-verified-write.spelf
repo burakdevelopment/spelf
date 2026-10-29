@@ -1,0 +1,19 @@
+module Feature.T_ts_verified_write
+resource Image { Raw, Verified } write { Raw } {
+  code: [Int<0..=255>; 128],
+  crc: Int<0..=65535>,
+}
+transition Image: Raw -> Verified;
+transition Image: Verified -> Raw;
+extern fn crc16(img: &Image<Raw>) -> Int<0..=65535>;
+state img: Image<Raw> = Image { code: [0; 128], crc: 0 };
+fn verify(i: Image<Raw>) -> Image<Verified> {
+  let c = crc16(i);
+  i.crc = c;
+  transit<Verified>(i)
+}
+fn patch_after_verify() {
+  let v = verify(take(img));
+  v.code[0] = 1;
+  put(img, transit<Raw>(v));
+}

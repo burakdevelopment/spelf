@@ -1,0 +1,5 @@
+module Feature.WatchdogNotFed
+extern fn wd_kick() effects { io(Wd) };
+watchdog Wd { timeout = 100[ms], fed_by = Health }
+task Gnc(period = 10[ms], priority = 30, wcet = 2[ms]) { wd_kick(); }
+task Health(period = 20[ms], priority = 25, wcet = 1[ms]) { }

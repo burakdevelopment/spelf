@@ -1,0 +1,41 @@
+sample,project,pr,url,root_cause,spelf,rule
+B,ArduPilot,34768,https://github.com/ArduPilot/ardupilot/pull/34768,Null pointer: backends[0] read when no backend exists,✓,02§2.5 index obligation; no pointers
+B,ArduPilot,34626,https://github.com/ArduPilot/ardupilot/pull/34626,1.2 KB local on the stack overflowed a thread stack,✓,R-201 stack budget from target assembly
+B,ArduPilot,34621,https://github.com/ArduPilot/ardupilot/pull/34621,Fallback-to-parameter logic when radius is zero,✗,
+B,ArduPilot,34618,https://github.com/ArduPilot/ardupilot/pull/34618,Higher-level atomicity race between dequeue and write,✗,not a data race: two separate atomic operations
+B,ArduPilot,34601,https://github.com/ArduPilot/ardupilot/pull/34601,Wrong (held) sample written to the log,✗,
+B,ArduPilot,34597,https://github.com/ArduPilot/ardupilot/pull/34597,Unlocked read-modify-write of a GPIO register from two contexts,◆,R-206 MMIO ownership (specified; not yet in spelfc)
+B,ArduPilot,34589,https://github.com/ArduPilot/ardupilot/pull/34589,No bounds check when drawing on the OSD canvas,✓,02§2.5 index obligation
+B,ArduPilot,34562,https://github.com/ArduPilot/ardupilot/pull/34562,Log record ordering (Replay),✗,
+B,ArduPilot,34524,https://github.com/ArduPilot/ardupilot/pull/34524,Gimbal ignores mode in first packet (hardware behaviour),✗,
+B,ArduPilot,34438,https://github.com/ArduPilot/ardupilot/pull/34438,Ticks converted with crystal frequency instead of core clock,◆,05§5.2 unit / clock domain
+B,ArduPilot,34368,https://github.com/ArduPilot/ardupilot/pull/34368,Wrong sensor register map / offsets,✗,
+B,ArduPilot,34360,https://github.com/ArduPilot/ardupilot/pull/34360,Up-positive terrain height subtracted from down-positive pd (sign),◆,05§5.2 frame; never-written timestamp counted fresh → R-403
+B,ArduPilot,34349,https://github.com/ArduPilot/ardupilot/pull/34349,ADC clock divider exceeds its limit,◆,05§5.7 configuration range (C #error also caught it)
+B,ArduPilot,34290,https://github.com/ArduPilot/ardupilot/pull/34290,set_rotation before registration overwrote instance 0,◆,R-203 typestate (no operation on Compass<Unregistered>)
+B,ArduPilot,34287,https://github.com/ArduPilot/ardupilot/pull/34287,cm/s → m/s conversion left a threshold of 10 (0.1 → 10 m/s),◆,05§5.2 unit (Mars Climate Orbiter class)
+B,ArduPilot,34122,https://github.com/ArduPilot/ardupilot/pull/34122,An index parameter labelled Hz,◆,05§5.2 unit (an index is an integer type)
+B,ArduPilot,34120,https://github.com/ArduPilot/ardupilot/pull/34120,Inverted loop condition,✗,
+B,ArduPilot,34098,https://github.com/ArduPilot/ardupilot/pull/34098,Altitudes with different datums (absolute / home) compared,◆,05§5.2 frame / datum
+B,ArduPilot,34057,https://github.com/ArduPilot/ardupilot/pull/34057,Bias unobservable on a stationary vehicle (estimator algorithm),✗,
+B,ArduPilot,34027,https://github.com/ArduPilot/ardupilot/pull/34027,Gate logic waits for an alignment that never happens,✗,
+B,ArduPilot,33990,https://github.com/ArduPilot/ardupilot/pull/33990,GCR decode table maps invalid codes to valid values,◆,R-202 encoding: encode∘decode = id fails on the wire range
+B,ArduPilot,33989,https://github.com/ArduPilot/ardupilot/pull/33989,Health flags cleared in one thread and read in another,✓,03§3.3 inter-task data race
+B,ArduPilot,33988,https://github.com/ArduPilot/ardupilot/pull/33988,Calibration changes the shared board orientation,✗,
+B,ArduPilot,33974,https://github.com/ArduPilot/ardupilot/pull/33974,Constraint silently reduces a quintuple notch to a triple,✗,side fix: filter array overflow → ✓ (not counted)
+B,ArduPilot,33949,https://github.com/ArduPilot/ardupilot/pull/33949,Inverted guard + unchecked return values assume 'sent',✓,return values cannot be ignored (M-13 class)
+B,ArduPilot,33947,https://github.com/ArduPilot/ardupilot/pull/33947,Rotated input written but raw input read,✗,
+B,ArduPilot,33942,https://github.com/ArduPilot/ardupilot/pull/33942,Cached angle overwritten in the default branch,✗,
+B,ArduPilot,33931,https://github.com/ArduPilot/ardupilot/pull/33931,Position written but timestamp not updated,◆,R-403 Held: value and time are refreshed together
+B,ArduPilot,33922,https://github.com/ArduPilot/ardupilot/pull/33922,False 'sent' success in the bootloader,✗,
+B,ArduPilot,34153,https://github.com/ArduPilot/ardupilot/pull/34153,Missing scale in swashplate angle estimate,✗,side fix: divide-by-zero guards → ✓ (not counted)
+A,PX4,24202,https://github.com/PX4/PX4-Autopilot/pull/24202,16-bit unsigned dt overflows at ~80 000 µs on a 12 Hz sensor,✓,R-501
+A,PX4,20625,https://github.com/PX4/PX4-Autopilot/pull/20625,32-bit time_t × 10^6 overflow → invalid nanoseconds,✓,R-501 (width chosen from proved range)
+A,PX4,27437,https://github.com/PX4/PX4-Autopilot/pull/27437,Division by zero when airspeeds are equal → NaN reached actuators,✓,R-501 (divisor ≠ 0 under the IEEE model)
+A,PX4,28107,https://github.com/PX4/PX4-Autopilot/pull/28107,Zero-airspeed division before take-off → NaN locked TECS,✓,R-501
+A,ArduPilot,34467,https://github.com/ArduPilot/ardupilot/pull/34467,32-bit dT × c6 product ~8e9 overflows → spurious 19 °C,✓,R-501
+A,ArduPilot,17708,https://github.com/ArduPilot/ardupilot/pull/17708,Counter difference of wrong width: all tasks fire every 65 536 ticks,✓,R-501 (no implicit wrap; modular arithmetic is explicit)
+A,ArduPilot,33715,https://github.com/ArduPilot/ardupilot/pull/33715,Uninitialised dist_to_edge → signalling NaN → FP exception,✓,no declaration without initialiser
+A,ArduPilot,24606,https://github.com/ArduPilot/ardupilot/pull/24606,EKF state zeroed then updated while IMU thread reads it,✓,03§3.3 data race
+A,ArduPilot,14140,https://github.com/ArduPilot/ardupilot/pull/14140,'Dirty' flag race between storage and writer threads,✓,03§3.3 data race
+A,PX4,CVE-2026-32743,https://github.com/PX4/PX4-Autopilot/commit/616b25a280e229c24d5cf12a03dbf248df89c474,Width-less sscanf into a 60-byte path → stack overflow in MAVLink task,✓,02§2.5

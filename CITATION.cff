@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use Spelf or its benchmark in research, please cite it as below."
+title: "Spelf: a verification-first systems language for flight software"
+authors:
+  - given-names: "Burak"
+version: "0.16"
+date-released: "2026-10-21"
+license: Apache-2.0
+keywords:
+  - flight software
+  - formal verification
+  - SMT
+  - units of measure
+  - typestate
+  - DO-178C
+  - aerospace

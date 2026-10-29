@@ -1,0 +1,15 @@
+module Fixed.M07
+encoded DataLength : Int<0..=65535> -> Int<1..=65536> {
+  decode(w) = w + 1,
+  encode(s) = s - 1,
+}
+fn data_field_octets(raw: Wire<DataLength>) -> Int<1..=65536> {
+  decode(raw)
+}
+fn main() -> Int<0..=255> {
+  let field = wire<DataLength>(5);
+  print(data_field_octets(field));
+  let back = encode<DataLength>(6);
+  print(decode(back) - 1);
+  0
+}

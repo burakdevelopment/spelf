@@ -1,0 +1,10 @@
+module Feature.DeadByInvariant
+struct Quat {
+  w: Float<1, -1.0..=1.0>,
+  x: Float<1, -1.0..=1.0>,
+  y: Float<1, -1.0..=1.0>,
+  z: Float<1, -1.0..=1.0>,
+} invariant w >= 0.0
+fn short_way(q: Quat) -> Int<0..=1> {
+  if q.w >= 0.0 { 1 } else { 0 }
+}

@@ -1,0 +1,8 @@
+module Fixed.M09
+protected RateStore {
+  var est: Float<rad/s> = 0.0[rad/s];
+  fn decay() { est = est * 0.9; }
+  fn get() -> Float<rad/s> { est }
+}
+task Gnc(period = 10[ms], priority = 40) { RateStore.decay(); }
+task Tlm(period = 100[ms], priority = 10) { let x = RateStore.get(); }

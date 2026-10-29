@@ -1,0 +1,5 @@
+module Mutant.M18
+fn torque_command(u: Float<N*m>) -> Float<N*m> {
+  let c = saturate(u, -1.0[N*m], 1.0[N*m]);
+  c
+}

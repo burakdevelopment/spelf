@@ -1,0 +1,8 @@
+module Feature.L3Voter @assurance(L3)
+fault_hypothesis FH { channel_faults = 1, fault_mode = value }
+redundancy G { channels = 3, hypothesis = FH, exchange = consistent_broadcast }
+@voter(G)
+fn mid(a: Int<-100..=100>, b: Int<-100..=100>, c: Int<-100..=100>) -> Int<-100..=100> {
+  if a <= b { if b <= c { b } else { if a <= c { c } else { a } } }
+  else { if a <= c { a } else { if b <= c { c } else { b } } }
+}

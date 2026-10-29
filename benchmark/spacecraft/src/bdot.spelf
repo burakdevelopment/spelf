@@ -1,0 +1,42 @@
+module Sat.Bdot @assurance(L2)
+type Bmag = Float32<uT @ Mag, -80.0..=80.0>;
+type Bbody = Float32<uT @ Body, -80.0..=80.0>;
+type Dip = Float32<A*m*m @ Body, -0.2..=0.2>;
+type Rate = Float32<uT/s @ Body, -2000.0..=2000.0>;
+struct MagV { x: Bmag, y: Bmag, z: Bmag }
+struct BodyV { x: Bbody, y: Bbody, z: Bbody }
+struct DipV { x: Dip, y: Dip, z: Dip }
+rotation MAG_TO_BODY: Mag -> Body = [[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]];
+const DT: Float32<s> = 0.1[s];
+const K: Float32<A*m*m*s/uT> = 0.05[A*m*m*s/uT];
+const ALPHA: Float32<1> = 0.3;
+const MMAX: Float32<A*m*m @ Body> = 0.2[A*m*m];
+state primed: bool = false;
+state bprev: BodyV = BodyV { x: 0.0[uT], y: 0.0[uT], z: 0.0[uT] };
+state fx: Rate = 0.0[uT/s];
+state fy: Rate = 0.0[uT/s];
+state fz: Rate = 0.0[uT/s];
+
+fn torquer(f: Rate) -> Dip {
+  let m = 0.0[A*m*m] - K * f;
+  if m > MMAX { MMAX } else { if m < -MMAX { -MMAX } else { m } }
+}
+
+fn bdot_step(mx: Bmag, my: Bmag, mz: Bmag, valid: bool) -> DipV {
+  let zero = DipV { x: 0.0[A*m*m], y: 0.0[A*m*m], z: 0.0[A*m*m] };
+  if !valid {
+    primed = false;
+    return zero;
+  }
+  let b = rotate<BodyV>(MAG_TO_BODY, MagV { x: mx, y: my, z: mz });
+  if !primed {
+    bprev = b;
+    primed = true;
+    return zero;
+  }
+  fx = fx + ALPHA * ((b.x - bprev.x) / DT - fx);
+  fy = fy + ALPHA * ((b.y - bprev.y) / DT - fy);
+  fz = fz + ALPHA * ((b.z - bprev.z) / DT - fz);
+  bprev = b;
+  DipV { x: torquer(fx), y: torquer(fy), z: torquer(fz) }
+}

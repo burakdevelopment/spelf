@@ -1,0 +1,20 @@
+module Feature.T_ts_use_after_move
+region dma_ram { size = 1[KiB], kind = dma }
+resource DmaBuf { Cpu, Device } in dma_ram device { Device } {
+  words: [Int<0..=65535>; 32],
+  count: Int<0..=32>,
+}
+resource DmaDone { Fired } { }
+transition DmaBuf: Cpu -> Device;
+transition DmaBuf: Device -> Cpu witness DmaDone;
+extern fn bc_start(b: &DmaBuf<Device>);
+extern fn bc_wait() -> DmaDone<Fired>;
+state rx: DmaBuf<Cpu> = DmaBuf { words: [0; 32], count: 0 };
+
+fn bad(b: DmaBuf<Cpu>) -> DmaBuf<Cpu> {
+  let d = transit<Device>(b);
+  b.count = 2;
+  bc_start(d);
+  let done = bc_wait();
+  transit<Cpu>(d, done)
+}

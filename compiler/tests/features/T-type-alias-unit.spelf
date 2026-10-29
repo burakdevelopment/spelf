@@ -1,0 +1,4 @@
+module Feature.TypeAliasUnit
+type Rate = Float<rad/s, -35.0..=35.0>;
+type DegRate = Float<deg/s, -2000.0..=2000.0>;
+fn bad(a: Rate, b: DegRate) -> Float<rad/s> { a + b }

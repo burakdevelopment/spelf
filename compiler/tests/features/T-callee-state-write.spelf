@@ -1,0 +1,8 @@
+module Feature.CalleeState
+state x: Int<0..=10> = 0;
+fn setx() { x = 10; }
+fn f() -> Int<0..=0> {
+  x = 0;
+  setx();
+  x
+}

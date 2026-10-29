@@ -1,0 +1,19 @@
+module Spacecraft.Ccsds
+type Byte = Int<0..=255>;
+fn wl_ccsds(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, rx_len: Int<0..=65535>) -> Int<-3..=65542> {
+  if rx_len < 6 {
+    return 0 - 1;
+  }
+  let w0 = b0 * 256 + b1;
+  if shr(w0, 13) != 0 {
+    return 0 - 2;
+  }
+  if band(w0, 2047) == 2047 {
+    return 0 - 3;
+  }
+  let dlen = b4 * 256 + b5 + 1;
+  if 6 + dlen > rx_len {
+    return 0 - 1;
+  }
+  6 + dlen
+}

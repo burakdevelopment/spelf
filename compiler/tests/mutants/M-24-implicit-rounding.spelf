@@ -1,0 +1,5 @@
+module Mutant.M24
+fn control_step(err: Fix<16, 12, rad/s>, gain: Fix<16, 14, 1>) -> Fix<16, 8, rad/s> {
+  let raw = err * gain;
+  requantize<Fix<16, 8, rad/s>>(raw)
+}

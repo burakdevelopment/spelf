@@ -1,0 +1,4 @@
+module Feature.FrameVar
+fn add(a: Float<uT @ Body>, b: Float<uT>) -> Float<uT @ Body> {
+  a + b
+}

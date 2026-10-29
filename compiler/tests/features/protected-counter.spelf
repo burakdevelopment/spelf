@@ -1,0 +1,17 @@
+module Feature.ProtCounter
+protected Counter {
+  var n: Int<0..=100> = 0;
+  fn inc() { if n < 100 { n = n + 1; } }
+  fn get() -> Int<0..=100> { n }
+}
+task Producer(period = 10[ms], priority = 30) { Counter.inc(); }
+task Monitor(period = 50[ms], priority = 10) { let v = Counter.get(); }
+fn main() -> Int<0..=255> {
+  Counter.inc();
+  Counter.inc();
+  Counter.inc();
+  print(Counter.get());
+  for i in 0..200 { Counter.inc(); }
+  print(Counter.get());
+  0
+}

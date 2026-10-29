@@ -1,0 +1,11 @@
+module Fixed.M01
+fn horizontal_bias(bh: Float<1>) -> Int<-32768..=32767> {
+  if bh > 32767.0 { return 32767; }
+  if bh < -32768.0 { return -32768; }
+  narrow<Int<-32768..=32767>>(bh)
+}
+fn main() -> Int<0..=255> {
+  print(horizontal_bias(64000.0));
+  print(horizontal_bias(-1200.0));
+  0
+}

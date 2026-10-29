@@ -1,0 +1,6 @@
+module Mutant.M13
+fn enqueue() -> Int<0..=1> {
+  var q: Bounded<Int<0..=255>, 8> = empty();
+  push(q, 42);
+  0
+}

@@ -1,0 +1,9 @@
+module Mutant.M08
+@ceiling(20)
+protected Bus {
+  var busy: bool = false;
+  fn claim() -> bool { if busy { return false; } busy = true; true }
+  fn release() { busy = false; }
+}
+task Distribute(period = 125[ms], priority = 40) { let ok = Bus.claim(); Bus.release(); }
+task Meteo(period = 1000[ms], priority = 5) { let ok = Bus.claim(); Bus.release(); }

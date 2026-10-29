@@ -1,0 +1,2 @@
+module Feature.IsrNoMia
+isr Tick(vector = 8, level = 3) { }

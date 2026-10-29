@@ -1,0 +1,782 @@
+{
+ "M-01": {
+  "title": "Unguarded narrowing f64 → i16 (Ariane 501)",
+  "cells": {
+   "C": [
+    "R",
+    "rc=3221225501"
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "R",
+    "rc=1 raised CONSTRAINT_ERROR : lib.adb:2 overflow check failed"
+   ],
+   "SPARK": [
+    "✓",
+    "medium: range check might fail, cannot prove lower bound for BH"
+   ],
+   "Spelf": [
+    "✓",
+    "[R-501] narrowing could not be proved: the floating-point value may be outside the range of Int<-32768..=32767>"
+   ]
+  },
+  "note": ""
+ },
+ "M-02": {
+  "title": "Unit swap lbf·s ↔ N·s (Mars Climate Orbiter)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "◆",
+    "error: aborting due to 1 previous error; error[E0308]: mismatched types"
+   ],
+   "Ada": [
+    "◆",
+    "default.gpr: error: [Ada Compile] lib.adb (default.gpr) failed with status 1; error: invalid operand types for operator \"+\""
+   ],
+   "SPARK": [
+    "◆",
+    "[GNAT0002] error: invalid operand types for operator \"+\""
+   ],
+   "Spelf": [
+    "◆",
+    "[05§5.2] '+': unit mismatch, lbf*s given, N*s expected; same dimension, different scale (1 lbf*s = 4.44822 N*s)"
+   ]
+  },
+  "note": ""
+ },
+ "M-03": {
+  "title": "Frame swap Body ↔ ECI",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "◆",
+    "error: aborting due to 1 previous error; error[E0308]: mismatched types"
+   ],
+   "Ada": [
+    "◆",
+    "default.gpr: error: [Ada Compile] lib.adb (default.gpr) failed with status 1; error: invalid operand types for operator \"+\""
+   ],
+   "SPARK": [
+    "◆",
+    "[GNAT0002] error: invalid operand types for operator \"+\""
+   ],
+   "Spelf": [
+    "◆",
+    "[05§5.2] frame mismatch: ECI and Body cannot be added"
+   ]
+  },
+  "note": ""
+ },
+ "M-04": {
+  "title": "Signed 32-bit centisecond counter overflow (Boeing 787 GCU)",
+  "cells": {
+   "C": [
+    "R",
+    "rc=3221225501"
+   ],
+   "MISRA C": [
+    "✓",
+    "integerOverflow: Signed integer overflow for expression 'cs+1'."
+   ],
+   "Rust": [
+    "R",
+    "rc=101 hread 'main' (5232) panicked at <tmp>\\r_m\\r.rs:1:27: attempt to add with overflow note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+   ],
+   "Ada": [
+    "R",
+    "rc=1 raised CONSTRAINT_ERROR : lib.adb:2 overflow check failed"
+   ],
+   "SPARK": [
+    "✓",
+    "medium: overflow check might fail, cannot prove upper bound for CS + 1"
+   ],
+   "Spelf": [
+    "✓",
+    "[R-501] return value: the value may be outside the range of Int<0..=2147483647> (overflow could not be ruled out)"
+   ]
+  },
+  "note": ""
+ },
+ "M-05": {
+  "title": "Epoch mix MET ↔ TAI (Deep Impact)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "◆",
+    "error: aborting due to 1 previous error; error[E0308]: mismatched types"
+   ],
+   "Ada": [
+    "◆",
+    "default.gpr: error: [Ada Compile] lib.adb (default.gpr) failed with status 1; error: invalid operand types for operator \"-\""
+   ],
+   "SPARK": [
+    "◆",
+    "[GNAT0002] error: invalid operand types for operator \"-\""
+   ],
+   "Spelf": [
+    "◆",
+    "[03§3.5] epoch mix: Instant<TAI> - Instant<MET> is undefined"
+   ]
+  },
+  "note": ""
+ },
+ "M-06": {
+  "title": "Buffer over-read trusting a length field (CCSDS class)",
+  "cells": {
+   "C": [
+    "R",
+    "rc=3221225477"
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "R",
+    "rc=101 at <tmp>\\r_m\\r.rs:1:59: index out of bounds: the len is 16 but the index is 40000 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+   ],
+   "Ada": [
+    "R",
+    "rc=1 raised CONSTRAINT_ERROR : lib.adb:2 index check failed"
+   ],
+   "SPARK": [
+    "✓",
+    "medium: array index check might fail"
+   ],
+   "Spelf": [
+    "✓",
+    "[02§2.5] array bound: the index may be outside [0, 16)"
+   ]
+  },
+  "note": ""
+ },
+ "M-07": {
+  "title": "CCSDS length field: '+1' forgotten (encoding in two places)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "◆",
+    "error: aborting due to 1 previous error; error[E0616]: field `0` of struct `wire::DataLength` is private"
+   ],
+   "Ada": [
+    "◆",
+    "default.gpr: error: [Ada Compile] lib.adb (default.gpr) failed with status 1; error: illegal operand for numeric conversion"
+   ],
+   "SPARK": [
+    "◆",
+    "error: illegal operand for numeric conversion"
+   ],
+   "Spelf": [
+    "◆",
+    "[R-202] return value: an encoded wire value (Wire<DataLength>) cannot be used in place of Int<1..=65536>"
+   ]
+  },
+  "note": ""
+ },
+ "M-08": {
+  "title": "Wrong hand-written ceiling priority → priority inversion (Mars Pathfinder)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "R◆",
+    "rc=1 raised PROGRAM_ERROR : s-taprob.adb:125 explicit raise"
+   ],
+   "SPARK": [
+    "◆",
+    "medium: ceiling priority protocol might not be respected for \"Bus.Lock\""
+   ],
+   "Spelf": [
+    "✓",
+    "[R-302] protected object 'Bus': the ceiling priority cannot be written by hand"
+   ]
+  },
+  "note": "C and Rust have no notion of ceiling or priority in the standard language: the error cannot be expressed or checked (✗)."
+ },
+ "M-09": {
+  "title": "Unprotected state shared by two tasks (Therac-25 class)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✓",
+    "error: aborting due to 2 previous errors; error[E0373]: closure may outlive the current function, but it borrows `rate_est`, which is owned by the current function"
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✓",
+    "high: possible data race when accessing variable \"est.rate_est\""
+   ],
+   "Spelf": [
+    "✓",
+    "[03§3.3] data race: state 'rate_est' is accessed from more than one task: Gnc, Tlm"
+   ]
+  },
+  "note": ""
+ },
+ "M-10": {
+  "title": "Suspect (saturated) measurement used directly (Schiaparelli)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "◆",
+    "error: aborting due to 1 previous error; error[E0369]: cannot multiply `Reading` by `f64`"
+   ],
+   "Ada": [
+    "R◆",
+    "rc=1 raised CONSTRAINT_ERROR : lib.adb:2 discriminant check failed"
+   ],
+   "SPARK": [
+    "◆",
+    "medium: discriminant check might fail"
+   ],
+   "Spelf": [
+    "◆",
+    "[R-402] a suspect value (Suspect<Float<rad/s>>) cannot be used directly"
+   ]
+  },
+  "note": ""
+ },
+ "M-11": {
+  "title": "Last good value persists without an age limit (Schiaparelli)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✗",
+    ""
+   ],
+   "Spelf": [
+    "◆",
+    "[R-403] a value derived from a sensor is written to persistent 'last_rate' without an age limit"
+   ]
+  },
+  "note": ""
+ },
+ "M-12": {
+  "title": "Transient signal latched without debounce (Mars Polar Lander)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✗",
+    ""
+   ],
+   "Spelf": [
+    "◆",
+    "[R-404] a transient signal is being latched: persistent 'touchdown' is changed under a condition that comes from a sensor"
+   ]
+  },
+  "note": ""
+ },
+ "M-13": {
+  "title": "'Full' result of a bounded queue ignored (Spirit, sol 18)",
+  "cells": {
+   "C": [
+    "◆",
+    "warning: ignoring return value of 'push' declared with attribute 'warn_unused_result' [-Wunused-result]"
+   ],
+   "MISRA C": [
+    "◆",
+    "ignoredReturnValue: Return value of function push() is not used.; misra-c2012-17.7: misra violation (use --rule-texts=<file> to get proper output)"
+   ],
+   "Rust": [
+    "✓",
+    "warning: 1 warning emitted; warning: unused `std::result::Result` that must be used"
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✓",
+    "warning: \"R\" is set by \"Push\" but not used after the call; warning: statement has no effect"
+   ],
+   "Spelf": [
+    "✓",
+    "[JPL-7] the result of push cannot be ignored: the queue-full case (Full) must be handled"
+   ]
+  },
+  "note": "In C, gcc warns only with the warn_unused_result attribute (◆); MISRA Rule 17.7 makes this mandatory."
+ },
+ "M-14": {
+  "title": "Backup channel shares the primary's code (Ariane 501 SRI1/SRI2)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✗",
+    ""
+   ],
+   "Spelf": [
+    "◆",
+    "[R-405] backup 'rate_b' shares code with primary 'rate_a': bias_filter"
+   ]
+  },
+  "note": ""
+ },
+ "M-15": {
+  "title": "Halt on fault during the flight phase (Ariane 501 policy)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✓",
+    "misra-c2012-21.8: misra violation (use --rule-texts=<file> to get proper output)"
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✓",
+    "high: all paths in \"On_Overflow\" raise exceptions or do not terminate normally; medium: unexpected exception might be raised"
+   ],
+   "Spelf": [
+    "✓",
+    "[R-401] `halt` cannot be allowed in modes of the flight phase: ['Ascent']"
+   ]
+  },
+  "note": "MISRA Rule 21.8 forbids abort everywhere; SPARK rejects a reachable raise; neither makes the 'in the flight phase' distinction (a blind ban). Spelf allows halting before lift-off."
+ },
+ "M-16": {
+  "title": "Out-of-range configuration constant (Titan IVB / Milstar)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "◆",
+    "error: aborting due to 1 previous error; error[E0080]: evaluation panicked: assertion failed: ROLL_RATE_GAIN >= -1.0 && ROLL_RATE_GAIN <= 0.0"
+   ],
+   "Ada": [
+    "◆",
+    "default.gpr: error: [Ada Compile] lib.adb (default.gpr) failed with status 1; default.gpr: error: [Ada Compile] main.adb (default.gpr) failed with status 1"
+   ],
+   "SPARK": [
+    "◆",
+    "error: value not in range of type \"Gain_T\" defined at line 3"
+   ],
+   "Spelf": [
+    "◆",
+    "[05§5.7] configuration 'RollRateFilter.gain': value -1.992476 is outside the range [-1.0, 0.0]"
+   ]
+  },
+  "note": ""
+ },
+ "M-17": {
+  "title": "Error quaternion produced without canonicalisation (turning the long way)",
+  "cells": {
+   "C": [
+    "R◆",
+    "rc=3221226505 Assertion failed: q.w >= 0.0, file <tmp>\\c_m\\r.c, line 3"
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "R◆",
+    "rc=101 read 'main' (13264) panicked at <tmp>\\r_m\\r.rs:2:86: assertion failed: q.w >= 0.0 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+   ],
+   "Ada": [
+    "R◆",
+    "rc=1 raised ADA.ASSERTIONS.ASSERTION_ERROR : Dynamic_Predicate failed at lib.adb:2"
+   ],
+   "SPARK": [
+    "◆",
+    "medium: predicate check might fail"
+   ],
+   "Spelf": [
+    "◆",
+    "[R-505] the representation invariant of 'Quat' could not be proved for this value"
+   ]
+  },
+  "note": ""
+ },
+ "M-18": {
+  "title": "Saturated command used without knowing it was clamped (integrator windup)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✗",
+    ""
+   ],
+   "Spelf": [
+    "◆",
+    "[R-407] return value: a saturated command (Clamped<Float<N*m, -1.0..=1.0>>) cannot be used in place of Float<N*m>"
+   ]
+  },
+  "note": ""
+ },
+ "M-19": {
+  "title": "Reuse outside the validated envelope (Ariane 501 root cause)",
+  "cells": {
+   "C": [
+    "R◆",
+    "rc=3221226505 Assertion failed: v_h <= 4000.0, file <tmp>\\c_m\\r.c, line 2"
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "R◆",
+    "rc=101 thread 'main' panicked at <tmp>\\r_m\\r.rs:1:42: Ariane 4 envelope note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+   ],
+   "Ada": [
+    "R◆",
+    "rc=1 raised ADA.ASSERTIONS.ASSERTION_ERROR : failed precondition from lib.ads:5"
+   ],
+   "SPARK": [
+    "◆",
+    "medium: precondition might fail"
+   ],
+   "Spelf": [
+    "◆",
+    "[R-502] validation envelope violated: in this calling context 'inertial_reference' can be used outside the region it was validated for"
+   ]
+  },
+  "note": ""
+ },
+ "M-20": {
+  "title": "Safe-mode path depends on a device assumed failed (gyro)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "◆",
+    "error: aborting due to 1 previous error; error[E0425]: cannot find value `gyro` in this scope"
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "◆",
+    "high: \"Gyro_Rate\" must be listed in the Global aspect of \"Enter_Survival\" (SPARK RM 6.1.4(15))"
+   ],
+   "Spelf": [
+    "◆",
+    "[R-410] safe-mode path 'enter_survival' depends on device 'Gyro', which hypothesis FH_DEGRADED declares FAILED"
+   ]
+  },
+  "note": "A SPARK Global contract and Rust capability passing limit the devices the safe path can reach (◆); there is no notion of a fault hypothesis: the engineer carries into the contract which device counts as failed."
+ },
+ "M-21": {
+  "title": "Recursion without a declared bound (stack depth, Toyota class)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✓",
+    "misra-c2012-15.5: misra violation (use --rule-texts=<file> to get proper output); misra-c2012-17.2: misra violation (use --rule-texts=<file> to get proper output)"
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✓",
+    "medium: implicit aspect Always_Terminates on \"Depth\" could be incorrect, subprogram is recursive"
+   ],
+   "Spelf": [
+    "✓",
+    "[R-201] recursion: depth → depth, the stack depth cannot be proved"
+   ]
+  },
+  "note": ""
+ },
+ "M-22": {
+  "title": "Uninitialised read",
+  "cells": {
+   "C": [
+    "✓",
+    "warning: 'x' is used uninitialized [-Wuninitialized]"
+   ],
+   "MISRA C": [
+    "✓",
+    "unassignedVariable: Variable 'x' is not assigned a value.; uninitvar: Uninitialized variable: x"
+   ],
+   "Rust": [
+    "✓",
+    "error: aborting due to 1 previous error; error[E0381]: used binding `x` isn't initialized"
+   ],
+   "Ada": [
+    "✓",
+    "warning: variable \"X\" is read but never assigned [-gnatwv]"
+   ],
+   "SPARK": [
+    "✓",
+    "high: \"X\" is not initialized"
+   ],
+   "Spelf": [
+    "✓",
+    "[00§0.2-E] 'x' cannot be declared without an initialiser: Spelf has no uninitialised state"
+   ]
+  },
+  "note": ""
+ },
+ "M-23": {
+  "title": "Division by a computed zero denominator",
+  "cells": {
+   "C": [
+    "R",
+    "rc=3221225501"
+   ],
+   "MISRA C": [
+    "✓",
+    "zerodiv: Division by zero."
+   ],
+   "Rust": [
+    "R",
+    "rc=101 thread 'main' panicked at <tmp>\\r_m\\r.rs:1:42: attempt to divide by zero note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+   ],
+   "Ada": [
+    "R",
+    "rc=1 raised CONSTRAINT_ERROR : lib.adb:2 divide by zero"
+   ],
+   "SPARK": [
+    "✓",
+    "medium: divide by zero might fail"
+   ],
+   "Spelf": [
+    "✓",
+    "[R-501] the divisor may be zero"
+   ]
+  },
+  "note": ""
+ },
+ "M-24": {
+  "title": "Implicit rounding in fixed point (rounding direction not stated)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✓",
+    "misra-c2012-10.1: misra violation (use --rule-texts=<file> to get proper output)"
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✗",
+    ""
+   ],
+   "Spelf": [
+    "✓",
+    "[05§5.1] a rounding mode is required for a lossy rescaling (fraction 26 → 8)"
+   ]
+  },
+  "note": ""
+ },
+ "M-25": {
+  "title": "Three channels + unsigned link, one Byzantine channel (Driscoll 2003)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✗",
+    ""
+   ],
+   "Spelf": [
+    "◆",
+    "[R-412] redundancy architecture 'FCS' cannot tolerate the fault hypothesis: 3 channels, at least 4 needed (3 channels, FH_FCS: f = 1, mode = byzantine)"
+   ]
+  },
+  "note": "The error is in the architecture (channel count / exchange protocol); no competing language has an architecture declaration, so the mutant and fixed programs are the same code."
+ },
+ "M-26": {
+  "title": "Second spike passes the filter as the hold expires (Qantas 72)",
+  "cells": {
+   "C": [
+    "✗",
+    ""
+   ],
+   "MISRA C": [
+    "✗",
+    ""
+   ],
+   "Rust": [
+    "✗",
+    ""
+   ],
+   "Ada": [
+    "✗",
+    ""
+   ],
+   "SPARK": [
+    "✗",
+    ""
+   ],
+   "Spelf": [
+    "◆",
+    "[R-605] the output of 'aoa_filter' exceeds its bound under FH_AOA: at step 6 |output − true| = 4 deg > 4 deg"
+   ]
+  },
+  "note": "The error is a corner case that appears only on arbitrary input sequences; no competing tool checks an output bound over time. The mutant lets the spike through (output 15 deg) but no run-time check fires."
+ }
+}

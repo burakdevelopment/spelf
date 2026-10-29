@@ -1,0 +1,15 @@
+module Fixed.M20
+fault_hypothesis FH_DEGRADED { failed = { Gyro, StarTracker } }
+extern fn read_gyro() -> Suspect<Float<rad/s>> effects { io(Gyro) };
+extern fn read_sun() -> Suspect<Float<rad>> effects { io(SunSensor) };
+extern fn set_wheels(t: Float<N*m>) effects { io(Wheels) };
+fn point_to_sun() {
+  match read_sun() {
+    Valid(a) => set_wheels(a * -0.05[N*m/rad]),
+    _ => set_wheels(0.0[N*m]),
+  }
+}
+@safe_path(FH_DEGRADED)
+fn enter_survival() {
+  point_to_sun();
+}

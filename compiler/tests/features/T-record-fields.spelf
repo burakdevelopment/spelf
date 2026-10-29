@@ -1,0 +1,5 @@
+module Feature.RecordFields
+struct Vec2 { x: Float<m>, y: Float<m> }
+fn origin() -> Vec2 {
+  Vec2 { x: 0.0[m] }
+}

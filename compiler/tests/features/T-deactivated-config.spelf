@@ -1,0 +1,5 @@
+module Feature.Deactivated
+config Mission { use_star_tracker: Int<0..=1> = 0, }
+fn source() -> Int<0..=2> {
+  if Mission.use_star_tracker == 1 { 2 } else { 1 }
+}

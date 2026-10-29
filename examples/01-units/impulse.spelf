@@ -1,0 +1,12 @@
+module Tutorial.Units
+
+type Impulse = Float<N*s, 0.0..=20000.0>;
+
+fn total(nav: Impulse, ground: Float<lbf*s, 0.0..=4000.0>) -> Float<N*s, 0.0..=40000.0> {
+  nav + convert<N*s>(ground)
+}
+
+fn main() -> Int<0..=255> {
+  print(total(100.0[N*s], 10.0[lbf*s]));
+  0
+}

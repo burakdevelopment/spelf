@@ -1,0 +1,7 @@
+module Feature.RotationReverse
+struct SV { x: Float32<uT @ Sensor>, y: Float32<uT @ Sensor>, z: Float32<uT @ Sensor> }
+struct BV { x: Float32<uT @ Body>, y: Float32<uT @ Body>, z: Float32<uT @ Body> }
+rotation S2B: Sensor -> Body = [[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]];
+fn back(b: BV) -> SV {
+  rotate<SV>(S2B, b)
+}

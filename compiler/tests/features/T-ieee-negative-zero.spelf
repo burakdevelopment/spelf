@@ -1,0 +1,9 @@
+module Feature.IeeeNegZero
+fn inv(x: Float<1, -4.0..=4.0>) -> Float<1> {
+  if x != 0.0 { 1.0 / x } else { 0.0 }
+}
+fn main() -> Int<0..=255> {
+  print(inv(2.0));
+  print(inv(0.0 - 0.0));
+  0
+}

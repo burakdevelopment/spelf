@@ -1,0 +1,11 @@
+module Mutant.M11
+extern fn read_rate() -> Suspect<Float<rad/s>>;
+state last_rate: Float<rad/s> = 0.0[rad/s];
+fn estimate() -> Float<rad/s> {
+  match read_rate() {
+    Valid(w) => { last_rate = w; w }
+    Saturated(w) => last_rate,
+    Stale(w) => last_rate,
+    Invalid => last_rate,
+  }
+}

@@ -1,0 +1,10 @@
+module Fixed.M10
+extern fn read_rate() -> Suspect<Float<rad/s>>;
+fn estimate(gain: Float<1>, last: Float<rad/s>) -> Float<rad/s> {
+  match read_rate() {
+    Valid(w) => w * gain,
+    Saturated(w) => last,
+    Stale(w) => last,
+    Invalid => last,
+  }
+}

@@ -1,0 +1,4 @@
+module Feature.Float32Mix
+fn f(a: Float32<1, 0.0..=1.0>, b: Float<1, 0.0..=1.0>) -> Float<1, 0.0..=2.0> {
+  b + a
+}

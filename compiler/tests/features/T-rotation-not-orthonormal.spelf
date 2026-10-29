@@ -1,0 +1,2 @@
+module Feature.RotationScale
+rotation S2B: Sensor -> Body = [[0.0, -1.0, 0.0], [1.02, 0.0, 0.0], [0.0, 0.0, 1.0]];

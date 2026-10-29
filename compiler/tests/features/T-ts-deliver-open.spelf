@@ -1,0 +1,23 @@
+module Feature.T_ts_deliver_open
+resource Slot { Open, Sealed } {
+  data: [Int<0..=255>; 64],
+  len: Int<0..=64>,
+}
+transition Slot: Open -> Sealed;
+transition Slot: Sealed -> Open;
+state slot: Slot<Open> = Slot { data: [0; 64], len: 0 };
+fn seal(s: Slot<Open>) -> Slot<Sealed> { transit<Sealed>(s) }
+fn deliver(s: &Slot<Sealed>) -> Int<0..=64> { s.len }
+fn reopen(s: Slot<Sealed>) -> Slot<Open> {
+  let o = transit<Open>(s);
+  o.len = 0;
+  o
+}
+
+fn bad() -> Int<0..=64> {
+  let s = take(slot);
+  s.len = 3;
+  let n = deliver(s);
+  put(slot, s);
+  n
+}

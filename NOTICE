@@ -1,0 +1,12 @@
+Spelf
+Copyright 2026 Burak
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Third-party tools used by the benchmark scripts are NOT distributed in this repository:
+- Cppcheck MISRA addon (GPL-3.0) — downloaded on demand by
+  benchmark/multilang/tools/fetch_misra_addon.py from https://github.com/danmar/cppcheck
+- Z3, cvc5, Zig, GCC, GNAT, GNATprove, Rust, Unicorn — installed separately by the user.
+
+The test-only header compiler/tests/rtems_api_subset/rtems.h declares a subset of the
+RTEMS 6 Classic API signatures for compile checks; it contains no RTEMS source code.

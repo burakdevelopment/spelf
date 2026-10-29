@@ -1,0 +1,8 @@
+module Mutant.M19
+@valid_for(v_h <= 4000.0[m/s], validated_by = "Ariane 4 flight envelope")
+fn inertial_reference(v_h: Float<m/s>) -> Float<m/s> {
+  v_h
+}
+fn ariane5_flight(v_h: Float<m/s, 0.0..=6800.0>) -> Float<m/s> {
+  inertial_reference(v_h)
+}

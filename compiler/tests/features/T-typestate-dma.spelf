@@ -1,0 +1,36 @@
+module Feature.TypestateDma
+region dma_ram { size = 1[KiB], kind = dma }
+resource DmaBuf { Cpu, Device } in dma_ram device { Device } {
+  words: [Int<0..=65535>; 32],
+  count: Int<0..=32>,
+}
+resource DmaDone { Fired } { }
+transition DmaBuf: Cpu -> Device;
+transition DmaBuf: Device -> Cpu witness DmaDone;
+extern fn bc_start(b: &DmaBuf<Device>);
+extern fn bc_wait() -> DmaDone<Fired>;
+state rx: DmaBuf<Cpu> = DmaBuf { words: [0; 32], count: 0 };
+
+fn fill(b: DmaBuf<Cpu>, v: Int<0..=65534>) -> DmaBuf<Cpu> {
+  b.words[0] = v;
+  b.count = 1;
+  b
+}
+fn transfer(b: DmaBuf<Cpu>) -> DmaBuf<Cpu> {
+  let d = transit<Device>(b);
+  bc_start(d);
+  let done = bc_wait();
+  transit<Cpu>(d, done)
+}
+fn peek(b: &DmaBuf<Cpu>) -> Int<0..=65535> { b.words[1] }
+fn cycle(v: Int<0..=65534>) -> Int<0..=65535> {
+  let b = fill(take(rx), v);
+  let c = transfer(b);
+  let r = peek(c);
+  put(rx, c);
+  r
+}
+fn main() {
+  print(cycle(41));
+  print(cycle(7));
+}

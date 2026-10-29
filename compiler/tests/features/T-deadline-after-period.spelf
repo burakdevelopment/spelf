@@ -1,0 +1,2 @@
+module Feature.Deadline
+task Ctrl(period = 10[ms], priority = 40, deadline = 12[ms]) { }

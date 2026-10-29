@@ -1,0 +1,5 @@
+module Feature.EncodedBad
+encoded DataLength : Int<0..=65535> -> Int<1..=65536> {
+  decode(w) = w + 1,
+  encode(s) = s + 1,
+}

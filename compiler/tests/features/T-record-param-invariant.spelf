@@ -1,0 +1,9 @@
+module Feature.RecordParam
+struct Window { lo: Int<-100..=100>, hi: Int<-100..=100> } invariant lo <= hi
+fn width(w: Window) -> Int<0..=200> {
+  w.hi - w.lo
+}
+fn main() -> Int<0..=255> {
+  print(width(Window { lo: 2, hi: 5 }));
+  0
+}

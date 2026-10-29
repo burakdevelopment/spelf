@@ -1,0 +1,5 @@
+module Fixed.M22
+fn f() -> Int<0..=10> {
+  let x: Int<0..=10> = 0;
+  x
+}

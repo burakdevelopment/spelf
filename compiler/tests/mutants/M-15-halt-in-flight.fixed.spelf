@@ -1,0 +1,6 @@
+module Fixed.M15
+mode_lattice Mission { Prelaunch -> Ascent, Ascent -> Cruise }
+flight_phase = { Ascent, Cruise };
+fn self_test_failed() effects { mode(Prelaunch) } {
+  halt(because = "SRI pre-launch self-test", allowed_in = { Prelaunch });
+}

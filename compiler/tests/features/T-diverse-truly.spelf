@@ -1,0 +1,8 @@
+module Feature.DiverseTruly
+extern fn read_gyro_a() -> Int<0..=4095> effects { io(GyroA) };
+extern fn read_gyro_b() -> Int<0..=4095> effects { io(GyroB) };
+fn offset_a(raw: Int<0..=4095>) -> Int<-2048..=2047> { raw - 2048 }
+fn offset_b(raw: Int<0..=4095>) -> Int<-2048..=2047> { if raw >= 2048 { raw - 2048 } else { 0 - (2048 - raw) } }
+@failover(backup = rate_b)
+fn rate_a() -> Int<-2048..=2047> { offset_a(read_gyro_a()) }
+fn rate_b() -> Int<-2048..=2047> { offset_b(read_gyro_b()) }

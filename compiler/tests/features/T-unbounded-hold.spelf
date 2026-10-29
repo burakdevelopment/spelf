@@ -1,0 +1,21 @@
+module Feature.UnboundedHold
+fault_hypothesis FH_AOA { channel_faults = 1, fault_mode = value, healthy_start = 1 }
+state memo: Float<deg, -30.0..=30.0> = 0.0[deg];
+state hold: Int<0..=3> = 0;
+@output_bound(hypothesis = FH_AOA, horizon = 8, tolerance = 1.0[deg], max_step = 0.25[deg], bound = 4.0[deg], unbounded = true)
+fn aoa_filter(a1: Float<deg, -30.0..=30.0>, a2: Float<deg, -30.0..=30.0>, a3: Float<deg, -30.0..=30.0>)
+    -> Float<deg, -30.0..=30.0> {
+  let avg = (a1 + a2) / 2.0;
+  if hold > 0 {
+    hold = hold - 1;
+    if hold > 0 {
+      return memo;
+    }
+  }
+  if a1 - a3 > 2.0[deg] || a3 - a1 > 2.0[deg] || a2 - a3 > 2.0[deg] || a3 - a2 > 2.0[deg] {
+    hold = 3;
+    return memo;
+  }
+  memo = avg;
+  avg
+}

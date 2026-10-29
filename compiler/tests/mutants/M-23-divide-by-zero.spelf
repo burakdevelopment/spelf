@@ -1,0 +1,4 @@
+module Mutant.M23
+fn rate(delta: Int<0..=1000>, dt_ms: Int<0..=100>) -> Int<0..=1000> {
+  delta / dt_ms
+}

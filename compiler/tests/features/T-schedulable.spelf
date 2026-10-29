@@ -1,0 +1,8 @@
+module Feature.Schedulable
+protected Estimate {
+  var rate: Int<-1000..=1000> = 0;
+  fn put(r: Int<-1000..=1000>) effects { wcet <= 20[us] } { rate = r; }
+  fn get() -> Int<-1000..=1000> effects { wcet <= 15[us] } { rate }
+}
+task Gnc(period = 10[ms], priority = 30, wcet = 3[ms]) { Estimate.put(5); }
+task Tlm(period = 100[ms], priority = 10, wcet = 20[ms]) { let r = Estimate.get(); }

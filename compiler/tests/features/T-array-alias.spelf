@@ -1,0 +1,13 @@
+module Feature.ArrayAlias
+state buf: [Int<0..=99>; 4] = [10; 4];
+fn peek_after_write(b: [Int<0..=99>; 4]) -> Int<0..=99> {
+  buf[0] = 99;
+  b[0]
+}
+fn sum3(b: [Int<0..=99>; 4]) -> Int<0..=297> { b[1] + b[2] + b[3] }
+fn main() -> Int<0..=255> {
+  print(peek_after_write(buf));
+  print(buf[0]);
+  print(sum3(buf));
+  0
+}

@@ -1,0 +1,10 @@
+module Feature.LaunderCall
+extern fn read_rate() -> Suspect<Float<rad/s>>;
+state est: Float<rad/s> = 0.0[rad/s];
+fn filter(w: Float<rad/s>) -> Float<rad/s> { w * 0.5 }
+fn update() {
+  match read_rate() {
+    Valid(w) => { est = filter(w); }
+    _ => {}
+  }
+}

@@ -1,0 +1,18 @@
+module Tutorial.Frames
+
+struct MagV  { x: Float32<uT @ Mag>,  y: Float32<uT @ Mag>,  z: Float32<uT @ Mag> }
+struct BodyV { x: Float32<uT @ Body>, y: Float32<uT @ Body>, z: Float32<uT @ Body> }
+
+rotation MAG_TO_BODY: Mag -> Body = [[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]];
+
+fn to_body(m: MagV) -> BodyV {
+  rotate<BodyV>(MAG_TO_BODY, m)
+}
+
+fn main() -> Int<0..=255> {
+  let b = to_body(MagV { x: 21.0[uT], y: -4.5[uT], z: 38.0[uT] });
+  print(b.x);
+  print(b.y);
+  print(b.z);
+  0
+}

@@ -1,0 +1,5 @@
+module Feature.WatchdogSlow
+extern fn wd_kick() effects { io(Wd) };
+clock { nominal = 50[MHz], degraded = { 10[MHz] } }
+watchdog Wd { timeout = 50[ms], fed_by = Health }
+task Health(period = 40[ms], priority = 25, wcet = 5[ms]) { wd_kick(); }

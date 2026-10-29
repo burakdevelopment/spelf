@@ -1,0 +1,8 @@
+module Fixed.M23
+fn rate(delta: Int<0..=1000>, dt_ms: Int<1..=100>) -> Int<0..=1000> {
+  delta / dt_ms
+}
+fn main() -> Int<0..=255> {
+  print(rate(500, 10));
+  0
+}

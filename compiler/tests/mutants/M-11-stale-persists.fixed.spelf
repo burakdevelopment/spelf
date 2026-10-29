@@ -1,0 +1,19 @@
+module Fixed.M11
+extern fn read_rate() -> Suspect<Float<rad/s>>;
+extern fn now_mono() -> Instant<Monotonic>;
+state last_rate: Held<Float<rad/s>> = held(0.0[rad/s], max_age = 50[ms]);
+fn held_or_zero(now: Instant<Monotonic>) -> Float<rad/s> {
+  match read(last_rate, now) {
+    Fresh(v) => v,
+    Expired => 0.0[rad/s],
+  }
+}
+fn estimate() -> Float<rad/s> {
+  let now = now_mono();
+  match read_rate() {
+    Valid(w) => { refresh(last_rate, w, now); w }
+    Saturated(w) => held_or_zero(now),
+    Stale(w) => held_or_zero(now),
+    Invalid => held_or_zero(now),
+  }
+}

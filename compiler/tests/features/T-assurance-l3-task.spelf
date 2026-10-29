@@ -1,0 +1,2 @@
+module Feature.L3Task @assurance(L3)
+task Ctrl(period = 10[ms], priority = 10, stack = 512) { }

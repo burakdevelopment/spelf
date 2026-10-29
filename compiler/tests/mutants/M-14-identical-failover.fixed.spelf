@@ -1,0 +1,14 @@
+module Fixed.M14
+extern fn read_gyro_a() -> Int<0..=4095> effects { io(GyroA) };
+extern fn read_gyro_b() -> Int<0..=4095> effects { io(GyroB) };
+fn bias_filter(raw: Int<0..=4095>) -> Int<-2048..=2047> { raw - 2048 }
+@failover(backup = rate_b)
+@diverse(
+  hardware     = diverse,
+  compiler     = common(because = "single toolchain; back end translation-validated (R-803)"),
+  source       = common(because = "bias_filter proved at L3; coding errors excluded by proof"),
+  requirements = common(because = "SRS-GNC-4 passed independent IV&V"),
+  team         = common(because = "independent review RV-112"),
+)
+fn rate_a() -> Int<-2048..=2047> { bias_filter(read_gyro_a()) }
+fn rate_b() -> Int<-2048..=2047> { bias_filter(read_gyro_b()) }

@@ -1,0 +1,4 @@
+module Feature.IsrRace
+state last: Int<0..=255> = 0;
+isr Uart(vector = 3, level = 5, min_interarrival = 100[us]) { last = 7; }
+task Tlm(period = 100[ms], priority = 5) { let x = last; }

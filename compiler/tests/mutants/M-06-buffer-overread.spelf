@@ -1,0 +1,4 @@
+module Mutant.M06
+fn payload_byte(buf: [Int<0..=255>; 16], data_length: Int<0..=65535>) -> Int<0..=255> {
+  buf[data_length]
+}

@@ -1,0 +1,13 @@
+module Fixed.M06
+fn payload_byte(buf: [Int<0..=255>; 16], data_length: Int<0..=65535>) -> Int<0..=255> {
+  if data_length >= 16 {
+    return 0;
+  }
+  buf[data_length]
+}
+fn main() -> Int<0..=255> {
+  let b: [Int<0..=255>; 16] = [7; 16];
+  print(payload_byte(b, 3));
+  print(payload_byte(b, 40000));
+  0
+}

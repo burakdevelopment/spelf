@@ -1,0 +1,5 @@
+module Feature.T_ts_missing_witness_decl
+region dma_ram { size = 1[KiB], kind = dma }
+resource DmaBuf { Cpu, Device } in dma_ram device { Device } { words: [Int<0..=65535>; 8] }
+transition DmaBuf: Cpu -> Device;
+transition DmaBuf: Device -> Cpu;

@@ -1,0 +1,2 @@
+module Feature.Reserved
+fn decode(x: Int<0..=10>) -> Int<0..=10> { x }

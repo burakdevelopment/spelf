@@ -1,0 +1,15 @@
+module Feature.Rotation
+struct SV { x: Float32<uT @ Sensor>, y: Float32<uT @ Sensor>, z: Float32<uT @ Sensor> }
+struct BV { x: Float32<uT @ Body>, y: Float32<uT @ Body>, z: Float32<uT @ Body> }
+rotation S2B: Sensor -> Body = [[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]];
+rotation Z30: Sensor -> Body = [[0.8660254037844387, -0.5, 0.0], [0.5, 0.8660254037844387, 0.0], [0.0, 0.0, 1.0]];
+fn main() -> Int<0..=255> {
+  let s = SV { x: 1.0[uT], y: 2.0[uT], z: 3.0[uT] };
+  let b = rotate<BV>(S2B, s);
+  print(b.x);
+  print(b.y);
+  print(b.z);
+  let c = rotate<BV>(Z30, SV { x: 1.0[uT], y: 0.0[uT], z: 0.0[uT] });
+  print(c.x);
+  0
+}

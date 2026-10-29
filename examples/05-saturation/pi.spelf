@@ -1,0 +1,27 @@
+module Tutorial.Saturation
+
+type Err = Float<rad, -1.0..=1.0>;
+type Cmd = Float<N*m, -0.5..=0.5>;
+
+const KP: Float<N*m/rad> = 0.8[N*m/rad];
+const KI: Float<N*m/(rad*s)> = 0.3[N*m/(rad*s)];
+const DT: Float<s> = 0.01[s];
+
+state integ: Float<rad*s, -2.0..=2.0> = 0.0[rad*s];
+
+fn step(e: Err) -> Cmd {
+  let raw = KP * e + KI * integ;
+  match saturate(raw, -0.5[N*m], 0.5[N*m]) {
+    Unclamped(u) => {
+      integ = integ + e * DT;
+      u
+    }
+    Clamped(u) => u,
+  }
+}
+
+fn main() -> Int<0..=255> {
+  print(step(0.2[rad]));
+  print(step(1.0[rad]));
+  0
+}

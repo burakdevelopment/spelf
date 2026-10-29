@@ -1,0 +1,13 @@
+module Feature.Isr
+protected GyroSample {
+  var raw: Int<-32768..=32767> = 0;
+  fn put(v: Int<-32768..=32767>) effects { wcet <= 2[us] } { raw = v; }
+  fn get() -> Int<-32768..=32767> effects { wcet <= 2[us] } { raw }
+}
+extern fn gyro_fifo_read() -> Int<-32768..=32767> effects { io(Gyro), stack <= 64 };
+isr GyroReady(vector = 10, level = 7, min_interarrival = 500[us], wcet = 10[us], stack = 256) {
+  GyroSample.put(gyro_fifo_read());
+}
+task Estimator(period = 10[ms], priority = 20, wcet = 2[ms], stack = 512) {
+  let r = GyroSample.get();
+}

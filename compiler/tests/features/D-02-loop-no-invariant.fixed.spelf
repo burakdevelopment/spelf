@@ -1,0 +1,13 @@
+module Feature.D02
+fn payload_sum(buf: [Int<0..=255>; 16]) -> Int<0..=2550> {
+  var s: Int<0..=2550> = 0;
+  for i in 6..16 invariant s <= 255 * (i - 6) {
+    s = s + buf[i];
+  }
+  s
+}
+fn main() -> Int<0..=255> {
+  let b: [Int<0..=255>; 16] = [255; 16];
+  print(payload_sum(b));
+  0
+}
